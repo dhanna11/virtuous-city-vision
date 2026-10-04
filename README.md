@@ -1,0 +1,21 @@
+# Ending the Gaza War Must Restore Our Humanity · The Virtuous City Vision · website
+
+- `index.html`: the front page, the pitch slideshow; `full.html`: the full deck. Each links to the other. Click Next and Previous, use the arrow keys or the space bar, swipe on a phone, or click the left or right half of a slide. Each slide has its own link, for example `#mandate`.
+- `virtuous-city-vision.pdf`: the PDF edition, linked from the slideshow's PDF button.
+- `build-slideshow.py`: rebuilds `index.html` from the pitch export (`pitch/`) and `full.html` from the full deck export (`deck/`), each a deck.json plus slides/*.html. Run it after the deck changes, then copy in the fresh PDF.
+
+## Publish on GitHub Pages
+1. Create a repository, for example `virtuous-city-vision`, and add `index.html`, `full.html` and `virtuous-city-vision.pdf` at the top level.
+2. In the repository, go to Settings → Pages. Under Source, pick "Deploy from a branch", then choose `main` and `/ (root)`.
+3. After a minute the site is at `https://<your-username>.github.io/virtuous-city-vision/`.
+
+## A custom subdomain (optional)
+1. In Settings → Pages → Custom domain, enter for example `virtuouscityvision.com` or a subdomain of it. This adds a `CNAME` file.
+2. At your DNS provider, add a CNAME record from the subdomain to `<your-username>.github.io`.
+3. Once the certificate is issued, tick "Enforce HTTPS".
+
+The only thing the page loads from outside is its fonts, from Google Fonts.
+
+## License
+- **Text and design** (the deck, the slides, the PDF and the plain-text edition): © 2026 David Hanna Jr., [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See `LICENSE-CONTENT.md`. Quoted material and sources belong to their authors.
+- **Build scripts and code** (`build-slideshow.py`, `tests/`, `.github/`, and the page wrapper around the slides): [MIT](LICENSE).

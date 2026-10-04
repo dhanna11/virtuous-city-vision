@@ -1,0 +1,141 @@
+{
+ "v": 4,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-04T12:00:00Z"
+ },
+ "title": "The Virtuous City Vision",
+ "order": [
+  "cover",
+  "lead",
+  "moment",
+  "missing",
+  "credit",
+  "vision",
+  "arc",
+  "sec-telos",
+  "farabi",
+  "heritage",
+  "education",
+  "positive-telos",
+  "scope",
+  "sec-board",
+  "discordances",
+  "incubator",
+  "mandate",
+  "mandate-1",
+  "mandate-2",
+  "mandate-3",
+  "mandate-4",
+  "mandate-5",
+  "members",
+  "repeatable",
+  "timeline",
+  "not-utopian",
+  "sec-demil",
+  "demil",
+  "lemkin",
+  "trade",
+  "factions",
+  "demob",
+  "movement",
+  "evacuation",
+  "labor",
+  "compact",
+  "custodian",
+  "assets",
+  "holy-land-trust",
+  "ledgers",
+  "wb-why",
+  "wb-both",
+  "deathbed",
+  "sec-recon",
+  "recon-why",
+  "frameworks",
+  "fw-telos-mandate",
+  "fw-phylogeny",
+  "fw-judeo-islamic",
+  "fw-abrahamic",
+  "precedent",
+  "house",
+  "house-history",
+  "house-wager",
+  "wtf",
+  "amorphous",
+  "rubble",
+  "two-state",
+  "wager-1948",
+  "decisive",
+  "close",
+  "references"
+ ],
+ "sections": {
+  "cover": {
+   "description": "Title, the three parts, author.",
+   "start": "cover"
+  },
+  "core": {
+   "description": "The malformed bone, the moment, what is missing, and the arc.",
+   "start": "lead"
+  },
+  "telos": {
+   "description": "Al-Farabi's Virtuous City as Gaza's telos, and its scope.",
+   "start": "sec-telos"
+  },
+  "board": {
+   "description": "Three discordances, the Coalition for Canaan, its Five-Point Mandate and members.",
+   "start": "sec-board"
+  },
+  "timeline": {
+   "description": "Three decades, three phases.",
+   "start": "timeline"
+  },
+  "demil": {
+   "description": "Demilitarization and the political transition of resistance factions.",
+   "start": "sec-demil"
+  },
+  "movement": {
+   "description": "Temporary evacuation and asylum.",
+   "start": "movement"
+  },
+  "economy": {
+   "description": "Palestinian labor, a US compact, an Arab custodian, and the Trust Fund.",
+   "start": "labor"
+  },
+  "westbank": {
+   "description": "The Holy Land Trust, its two ledgers, and why.",
+   "start": "holy-land-trust"
+  },
+  "recon": {
+   "description": "Five reconciliation frameworks and a precedent.",
+   "start": "sec-recon"
+  },
+  "wisdom": {
+   "description": "The House of Wisdom and Peace.",
+   "start": "house"
+  },
+  "close": {
+   "description": "What was all this for, and the close.",
+   "start": "wtf"
+  },
+  "references": {
+   "description": "Sources named in the plan.",
+   "start": "references"
+  }
+ },
+ "faces": {
+  "instrument-serif": {
+   "family": "Instrument Serif",
+   "href": "https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap"
+  },
+  "jetbrains-mono": {
+   "family": "JetBrains Mono",
+   "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+  },
+  "source-sans-3": {
+   "family": "Source Sans 3",
+   "href": "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+  }
+ },
+ "designSystems": []
+}

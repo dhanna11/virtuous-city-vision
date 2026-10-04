@@ -1,0 +1,72 @@
+{
+ "v": 4,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-04T12:00:00Z"
+ },
+ "title": "The Virtuous City Vision · Pitch",
+ "order": [
+  "cover",
+  "lead",
+  "missing",
+  "vision",
+  "p-telos",
+  "p-board",
+  "mandate",
+  "members",
+  "timeline",
+  "p-demil",
+  "p-movement",
+  "p-economy",
+  "p-west-bank",
+  "frameworks",
+  "house",
+  "wtf",
+  "p-close"
+ ],
+ "sections": {
+  "open": {
+   "description": "Title and the core thesis.",
+   "start": "cover"
+  },
+  "pitch-telos": {
+   "description": "The telos.",
+   "start": "p-telos"
+  },
+  "pitch-coalition": {
+   "description": "The Board of Peace and the Coalition for Canaan.",
+   "start": "p-board"
+  },
+  "timeline": {
+   "description": "Three decades.",
+   "start": "timeline"
+  },
+  "pitch-transition": {
+   "description": "Demilitarization, freedom of movement, reconstruction, the West Bank.",
+   "start": "p-demil"
+  },
+  "pitch-recon": {
+   "description": "Five frameworks and the House of Wisdom and Peace.",
+   "start": "frameworks"
+  },
+  "close": {
+   "description": "The close.",
+   "start": "wtf"
+  }
+ },
+ "faces": {
+  "instrument-serif": {
+   "family": "Instrument Serif",
+   "href": "https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap"
+  },
+  "jetbrains-mono": {
+   "family": "JetBrains Mono",
+   "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+  },
+  "source-sans-3": {
+   "family": "Source Sans 3",
+   "href": "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+  }
+ },
+ "designSystems": []
+}
