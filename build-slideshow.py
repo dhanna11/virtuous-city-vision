@@ -24,6 +24,10 @@ ASK_PROMPT = ("Read the Virtuous City Vision at https://dhanna11.github.io/virtu
               "Summarize it in a few lines, then answer my questions about it. Be fair to both its strengths and its weaknesses, "
               "and where it falls short, suggest how the plan could be improved.")
 ASK_LINKS = [("Claude", "https://claude.ai/new?q="), ("ChatGPT", "https://chatgpt.com/?q=")]
+# 5 Oct 2026 (author): mark this as a DRAFT, as on the Kyivan Rus Condominium site. While True, the page says DRAFT in its
+# title, in a badge over the slides and as a faint watermark on every slide, and asks search engines not to index it.
+# Set to False to publish as final.
+DRAFT = True
 FEEDBACK = ("Found a way to improve it? Tell me on X: @thekingdavidjr", "https://x.com/thekingdavidjr")
 
 # 24px line icons, stroke = currentColor (the slide sets color and size on the element)
@@ -121,13 +125,25 @@ def build(with_pdf, deck_dir=DECK, other=None, forward=None):
                    .replace("{{NOTE}}", note).replace("{{TOTAL}}", str(len(order))) \
                    .replace("{{ALIASES}}", json.dumps(aliases)) \
                    .replace("{{FORWARD}}", json.dumps({"page": forward[0], "ids": sorted(forward[1])} if forward else {"page": "", "ids": []})) \
-                   .replace("<title>The Virtuous City Vision</title>", "<title>The Virtuous City Vision</title>" if deck_dir == PITCH else "<title>The Virtuous City Vision · Full deck</title>")
+                   .replace("<title>The Virtuous City Vision</title>", "<title>The Virtuous City Vision</title>" if deck_dir == PITCH else "<title>The Virtuous City Vision · Full deck</title>") \
+                   .replace("<title>", "<title>DRAFT · " if DRAFT else "<title>", 1).replace("{{DRAFT_HEAD}}", DRAFT_HEAD if DRAFT else "") \
+                   .replace("{{DRAFT_BADGE}}", DRAFT_BADGE if DRAFT else "")
+
+DRAFT_HEAD = """<meta name="robots" content="noindex">
+<style>
+  .draft { position:absolute; left:16px; top:12px; z-index:3; pointer-events:none; font: 700 11px/1 'JetBrains Mono', ui-monospace, monospace;
+           letter-spacing:2.5px; color: var(--deep); background: var(--gold); border-radius:3px; padding:6px 10px; }
+  .stage section::after { content:"DRAFT"; position:absolute; left:50%; top:50%; transform: translate(-50%, -50%) rotate(-24deg);
+           font: 700 360px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:40px; color: rgba(201,168,76,.05); pointer-events:none; }
+</style>"""
+DRAFT_BADGE = '<div class="draft">DRAFT · NOT FINAL</div>'
 
 TEMPLATE = r"""<!doctype html>
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Virtuous City Vision</title>
+{{DRAFT_HEAD}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap">
 <style>
@@ -229,6 +245,7 @@ TEMPLATE = r"""<!doctype html>
 {{SLIDES}}
 <div class="hint">← → to move</div>
 {{NOTE}}
+{{DRAFT_BADGE}}
 </main>
 <nav class="bar" aria-label="Slideshow controls">
   <div class="progress" id="prog"></div>

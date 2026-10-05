@@ -2,6 +2,8 @@
 
 *The Virtuous City Vision · David Hanna Jr. · Unofficial, a private author's proposal · October 2026*
 
+> **DRAFT** · a work in progress, not the final text.
+
 *Slides: https://dhanna11.github.io/virtuous-city-vision/ (pitch) and https://dhanna11.github.io/virtuous-city-vision/full.html (full deck). Text and design © 2026 David Hanna Jr., licensed CC BY 4.0.*
 
 The Israeli-Palestinian conflict has long resembled a malformed bone: broken, poorly set, fractured again, and left to limp onward in dysfunction. With the Board of Peace established and Phase Two of Trump's 20-point plan underway, that hardened structure has briefly softened — and enough pieces of the post-war mosaic are now visible to paint a new architecture for Israel, Palestine, and the wider Middle East. The bone can be reset properly, or harden again into another frozen conflict that guarantees the next war.
