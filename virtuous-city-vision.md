@@ -178,7 +178,7 @@ Building a House of Wisdom and Peace in Gaza is not an anachronism. It is a wage
 
 ## What the Fuck Was All of This Destruction For?
 
-Anyone who has lived through these past 900 days has had to ask themselves one unavoidable question:
+Anyone who has lived through these past three years has had to ask themselves one unavoidable question:
 
 What the fuck was all this for?
 
@@ -206,4 +206,4 @@ The Virtuous City Vision, while centered on Gaza, is an attempt to revive and mo
 
 What is proposed here does not ask Israelis or Palestinians to pretend that history can be undone, identities dissolved, or grievances erased. It asks only that the war end decisively. Periodic wars punctuated by brief ceasefires are morally and strategically unacceptable.
 
-If there is any unifying truth left after these 900 days of devastation, it is this: the planetary devastation that we have all borne in our nervous systems must never occur again.
+If there is any unifying truth left after these three years of devastation, it is this: the planetary devastation that we have all borne in our nervous systems must never occur again.
