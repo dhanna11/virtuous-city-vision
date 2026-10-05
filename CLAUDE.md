@@ -15,7 +15,7 @@ A static site: two click-through slideshows (the pitch on the front page, the fu
 - `.github/workflows/check.yml` and `tests/`: the check that runs on every PR (see "Checks").
 
 ## Where the deck lives
-The first version of both decks (4 Oct 2026) was cut from the author's essay (`virtuous-city-vision.md`) in a Claude Code session: slide text is the essay's sentences, trimmed; headings and card labels were drawn from it. No Slides artifact holds these decks yet. Once the author picks one up in the chat app, record its URL here, and from then on the artifact is upstream and `deck/` / `pitch/` are copies of it, as in the Accords repo.
+The first version of both decks (4 Oct 2026) was cut from the author's essay (`virtuous-city-vision.md`) in a Claude Code session: slide text is the essay's sentences, trimmed; headings and card labels were drawn from it. On 5 Oct 2026 both decks were regrouped into the six blocks of the author's architecture diagram ("The Virtuous City Vision: A Geopolitical Architecture") and given its extra detail; where the diagram and the essay conflict, the essay's wording stands. The essay (`.md`) was not changed, so it lacks the diagram's detail. No Slides artifact holds these decks yet. Once the author picks one up in the chat app, record its URL here, and from then on the artifact is upstream and `deck/` / `pitch/` are copies of it, as in the Accords repo.
 
 ## Tasks
 ### Updating after the deck changes

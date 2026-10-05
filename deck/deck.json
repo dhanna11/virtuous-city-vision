@@ -18,16 +18,19 @@
   "heritage",
   "education",
   "positive-telos",
+  "social-contract",
   "scope",
   "sec-board",
   "discordances",
   "incubator",
+  "convention",
   "mandate",
   "mandate-1",
   "mandate-2",
   "mandate-3",
   "mandate-4",
   "mandate-5",
+  "guarantees",
   "members",
   "repeatable",
   "timeline",
@@ -37,11 +40,12 @@
   "lemkin",
   "trade",
   "factions",
+  "ddr",
   "demob",
+  "isf",
   "movement",
   "evacuation",
-  "labor",
-  "compact",
+  "egypt",
   "custodian",
   "assets",
   "holy-land-trust",
@@ -49,6 +53,11 @@
   "wb-why",
   "wb-both",
   "deathbed",
+  "council",
+  "econ-plan",
+  "compact",
+  "labor",
+  "labor-transition",
   "sec-recon",
   "recon-why",
   "frameworks",
@@ -56,8 +65,10 @@
   "fw-phylogeny",
   "fw-judeo-islamic",
   "fw-abrahamic",
+  "multiple-truths",
   "precedent",
   "house",
+  "house-pilots",
   "house-history",
   "house-wager",
   "wtf",
@@ -75,39 +86,43 @@
    "start": "cover"
   },
   "core": {
-   "description": "The malformed bone, the moment, what is missing, and the arc.",
+   "description": "The malformed bone, the moment, what is missing, and the architecture.",
    "start": "lead"
   },
   "telos": {
-   "description": "Al-Farabi's Virtuous City as Gaza's telos, and its scope.",
+   "description": "Al-Farabi's Virtuous City as Gaza's telos, a new social contract, and its scope.",
    "start": "sec-telos"
   },
-  "board": {
-   "description": "Three discordances, the Coalition for Canaan, its Five-Point Mandate and members.",
+  "coalition": {
+   "description": "The Board of Peace as incubator, the Virtuous City Convention, the Coalition for Canaan, its mandate, guarantees and members.",
    "start": "sec-board"
   },
-  "timeline": {
-   "description": "Three decades, three phases.",
+  "continuity": {
+   "description": "An incubation and three phases over roughly 30 years.",
    "start": "timeline"
   },
-  "demil": {
-   "description": "Demilitarization and the political transition of resistance factions.",
+  "security": {
+   "description": "Demilitarization, DDR, and the ISF.",
    "start": "sec-demil"
   },
   "movement": {
-   "description": "Temporary evacuation and asylum.",
+   "description": "Freedom of movement: temporary evacuation and asylum.",
    "start": "movement"
   },
-  "economy": {
-   "description": "Palestinian labor, a US compact, an Arab custodian, and the Trust Fund.",
-   "start": "labor"
+  "arab": {
+   "description": "Egypt, the Reconstruction Custodian, and the Virtuous City Trust Fund.",
+   "start": "egypt"
   },
   "westbank": {
    "description": "The Holy Land Trust, its two ledgers, and why.",
    "start": "holy-land-trust"
   },
+  "economy": {
+   "description": "The Virtuous City Council, the economic plan, a US compact, and the Palestinian Labor Movement.",
+   "start": "council"
+  },
   "recon": {
-   "description": "Five reconciliation frameworks and a precedent.",
+   "description": "Five reconciliation frameworks, the Multiple Truths framework, and a precedent.",
    "start": "sec-recon"
   },
   "wisdom": {

@@ -10,44 +10,67 @@
   "lead",
   "missing",
   "vision",
+  "arc",
   "p-telos",
   "p-board",
   "mandate",
-  "members",
+  "guarantees",
   "timeline",
   "p-demil",
+  "isf",
   "p-movement",
-  "p-economy",
+  "p-arab",
   "p-west-bank",
+  "p-economy",
   "frameworks",
   "house",
   "wtf",
   "p-close"
  ],
  "sections": {
-  "open": {
-   "description": "Title and the core thesis.",
+  "cover": {
+   "description": "Title, the core thesis, and the architecture.",
    "start": "cover"
   },
-  "pitch-telos": {
+  "telos": {
    "description": "The telos.",
    "start": "p-telos"
   },
-  "pitch-coalition": {
-   "description": "The Board of Peace and the Coalition for Canaan.",
+  "coalition": {
+   "description": "The Board of Peace, the Coalition for Canaan, and its guarantees.",
    "start": "p-board"
   },
-  "timeline": {
-   "description": "Three decades.",
+  "continuity": {
+   "description": "An incubation and three phases.",
    "start": "timeline"
   },
-  "pitch-transition": {
-   "description": "Demilitarization, freedom of movement, reconstruction, the West Bank.",
+  "security": {
+   "description": "Demilitarization and the ISF.",
    "start": "p-demil"
   },
-  "pitch-recon": {
-   "description": "Five frameworks and the House of Wisdom and Peace.",
+  "movement": {
+   "description": "Freedom of movement.",
+   "start": "p-movement"
+  },
+  "arab": {
+   "description": "Arab partners and trust funds.",
+   "start": "p-arab"
+  },
+  "westbank": {
+   "description": "The Holy Land Trust.",
+   "start": "p-west-bank"
+  },
+  "economy": {
+   "description": "Governance and economy.",
+   "start": "p-economy"
+  },
+  "recon": {
+   "description": "Five frameworks.",
    "start": "frameworks"
+  },
+  "wisdom": {
+   "description": "The House of Wisdom and Peace.",
+   "start": "house"
   },
   "close": {
    "description": "The close.",

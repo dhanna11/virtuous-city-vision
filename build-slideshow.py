@@ -45,13 +45,10 @@ ICONS = {
   "Verified": '<path d="M12 2.5 14.6 4.4 17.8 4.3 18.8 7.3 21.3 9.2 20.3 12.2 21.3 15.2 18.8 17.1 17.8 20.1 14.6 20 12 21.9 9.4 20 6.2 20.1 5.2 17.1 2.7 15.2 3.7 12.2 2.7 9.2 5.2 7.3 6.2 4.3 9.4 4.4z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
   "Warning": '<path d="M12 3 2 20h20z"/><path d="M12 10v4"/><path d="M12 17h.01"/>',
 }
-SECTION_LABEL = {"cover": "Cover", "core": "The core thesis", "telos": "1 · The telos", "board": "2 · The Coalition for Canaan",
-                 "timeline": "3 · The timeline", "demil": "4 · Demilitarization", "movement": "5 · Freedom of movement",
-                 "economy": "6 · Reconstruction", "westbank": "7 · The West Bank", "recon": "8 · Rehumanization",
-                 "wisdom": "9 · The House of Wisdom", "close": "The close", "references": "References",
-                 # the pitch's sections
-                 "open": "Cover", "pitch-telos": "1 · The telos", "pitch-coalition": "2 · The Coalition for Canaan",
-                 "pitch-transition": "4 · The transition", "pitch-recon": "8 · Rehumanization"}
+SECTION_LABEL = {"cover": "Cover", "core": "The core thesis", "telos": "1 · The telos", "coalition": "2 · Coalition core",
+                 "continuity": "3 · Coalition continuity", "security": "4 · Security & stabilization", "movement": "5 · Freedom of movement",
+                 "arab": "6 · Arab partners & trust funds", "westbank": "7 · The West Bank", "economy": "8 · Governance & economy",
+                 "recon": "9 · Rehumanization", "wisdom": "10 · The House of Wisdom", "close": "The close", "references": "References"}
 SLIDE_LABEL = {}
 # Slide ids the deck has dropped, mapped to the slide that now holds the same content, so links people shared keep working.
 # Add an entry whenever a sync removes or renames an id; never delete one.
