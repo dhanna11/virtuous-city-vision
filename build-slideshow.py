@@ -134,7 +134,7 @@ DRAFT_HEAD = """<meta name="robots" content="noindex">
   .draft { position:absolute; left:16px; top:12px; z-index:3; pointer-events:none; font: 700 11px/1 'JetBrains Mono', ui-monospace, monospace;
            letter-spacing:2.5px; color: var(--deep); background: var(--gold); border-radius:3px; padding:6px 10px; }
   .stage section::after { content:"DRAFT"; position:absolute; left:50%; top:50%; transform: translate(-50%, -50%) rotate(-24deg);
-           font: 700 360px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:40px; color: rgba(201,168,76,.05); pointer-events:none; }
+           font: 700 360px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:40px; color: rgba(163,68,42,.05); pointer-events:none; }
 </style>"""
 DRAFT_BADGE = '<div class="draft">DRAFT · NOT FINAL</div>'
 
@@ -145,19 +145,20 @@ TEMPLATE = r"""<!doctype html>
 <title>The Virtuous City Vision</title>
 {{DRAFT_HEAD}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Amiri&family=Frank+Ruhl+Libre:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
   /* single dark look, by choice: it is the deck's own identity */
-  :root { color-scheme: dark; --ink:#05090f; --navy:#0a1628; --deep:#070e18; --gold:#c9a84c; --gold-l:#e0c872; --gold-d:#8a7234;
-          --paper:#f0ece2; --line:rgba(201,168,76,.22); --bar:56px; }
+  /* identity A (8 Oct 2026): a light manuscript page; the variable names are the Accords' (gold = the accent, paper = the text) */
+  :root { color-scheme: light; --ink:#d8cdb3; --navy:#f3ead6; --deep:#f3ead6; --gold:#a3442a; --gold-l:#1f3d73; --gold-d:#8c7651;
+          --paper:#2a2118; --line:rgba(168,130,58,.4); --hover:rgba(163,68,42,.08); --bar:56px; }
   /* iOS Safari inflates text inside the wide 1920px slide, except while it animates, so text jumped size when a slide finished entering */
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   html, body { height: 100%; }
-  body { margin:0; background: var(--ink); color: var(--paper); font-family:'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+  body { margin:0; background: var(--ink); color: var(--paper); font-family:'EB Garamond', Georgia, serif;
          display:flex; flex-direction:column; overflow:hidden; }
   .viewport { position:relative; flex:1; min-height:0; overflow:hidden; cursor:default; touch-action: pan-y; }
   .stage { position:absolute; left:50%; top:50%; width:1920px; height:1080px; transform-origin: 0 0; visibility:hidden;
-           box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+           box-shadow: 0 24px 60px rgba(70,45,10,.28); }
   .stage.on { visibility:visible; }
   .stage section { position:relative; width:1920px; height:1080px; box-sizing:border-box; overflow:hidden; }
   .stage section * { box-sizing:border-box; }
@@ -176,6 +177,8 @@ TEMPLATE = r"""<!doctype html>
   .stage.enter-f section > *:not([style*="position:absolute"]), .stage.enter-b section > *:not([style*="position:absolute"]) {
       animation: rise .6s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
   .stage.leave { visibility:visible; animation: out .28s ease both; }
+  /* full-slide drawings (the manuscript frame, big diagrams) slide in with their slide but never rise past its edge (class xf) */
+  .stage.enter-f section > .xf, .stage.enter-b section > .xf { animation: none; }
   @media (prefers-reduced-motion: reduce) { .stage, .stage * { animation: none !important; } }
 
   /* control bar */
@@ -189,13 +192,13 @@ TEMPLATE = r"""<!doctype html>
   .count { font: 400 11px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:1.5px; color: var(--gold-d); font-variant-numeric: tabular-nums; white-space:nowrap; }
   .btn { width:40px; height:40px; border-radius:50%; border:1px solid var(--gold-d); background: transparent; color: var(--gold-l);
          display:grid; place-items:center; cursor:pointer; transition: background .2s, border-color .2s, transform .15s; }
-  .btn:hover { background: rgba(201,168,76,.12); border-color: var(--gold); }
+  .btn:hover { background: var(--hover); border-color: var(--gold); }
   .btn:active { transform: scale(.94); }
   .btn:disabled { opacity:.3; cursor:default; }
   .btn svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   .pdf { font: 700 11px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:2px; color: var(--gold-l); text-decoration:none;
          border:1px solid var(--gold-d); border-radius:20px; padding:9px 14px; }
-  .pdf:hover { background: rgba(201,168,76,.12); }
+  .pdf:hover { background: var(--hover); }
   .ask { display:flex; align-items:center; gap:8px; }
   .ask-lbl { display:none; font: 400 9px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:1.5px; text-transform:uppercase; color: var(--gold-d); }
   .note { font: 400 10px/1 'JetBrains Mono', ui-monospace, monospace; letter-spacing:1.5px; color: var(--gold-d); text-decoration:none; white-space:nowrap; }
@@ -208,21 +211,21 @@ TEMPLATE = r"""<!doctype html>
                  color: var(--gold-l); text-decoration:none; }
   .switch .seg + .seg { border-left:1px solid var(--gold-d); }
   .switch .seg.cur { background: var(--gold); color: var(--deep); }
-  .switch a.seg:hover { background: rgba(201,168,76,.12); }
+  .switch a.seg:hover { background: var(--hover); }
   .menu-ask:not(.menu-ask + .menu-ask) { border-top:1px solid var(--line); margin-top:6px; padding-top:6px; }
   .menu-ask a { display:block; padding:10px 12px; border-radius:4px; color: var(--gold-l); text-decoration:none;
                 font: 700 11px/1.2 'JetBrains Mono', ui-monospace, monospace; letter-spacing:2px; text-transform:uppercase; }
-  .menu-ask a:hover { background: rgba(201,168,76,.12); }
+  .menu-ask a:hover { background: var(--hover); }
   .menu-ask + .menu-note { border-top:0; margin-top:0; }
   .menu-note { display:none; border-top:1px solid var(--line); margin-top:6px; padding:10px 12px 4px; }
-  .menu-note .note { font: 400 13px/1.2 'Source Sans 3', 'Segoe UI', Arial, sans-serif; letter-spacing:0; }
+  .menu-note .note { font: 400 15px/1.2 'EB Garamond', Georgia, serif; letter-spacing:0; }
   :focus-visible { outline: 2px solid var(--gold-l); outline-offset: 3px; }
   .menu { position:absolute; left:16px; bottom: calc(var(--bar) + env(safe-area-inset-bottom, 0px) + 8px); background: var(--deep);
           border:1px solid var(--line); border-radius:6px; padding:8px; margin:0; list-style:none; min-width:260px; max-width: calc(100vw - 32px);
-          box-shadow: 0 20px 50px rgba(0,0,0,.6); z-index:5; }
+          box-shadow: 0 16px 40px rgba(70,45,10,.25); z-index:5; }
   .menu button { display:block; width:100%; text-align:left; background:none; border:0; color: var(--paper); padding:10px 12px; border-radius:4px;
-                 font: 400 16px/1.2 'Instrument Serif', Georgia, serif; cursor:pointer; }
-  .menu button:hover, .menu button.cur { background: rgba(201,168,76,.12); color: var(--gold-l); }
+                 font: 500 18px/1.2 'EB Garamond', Georgia, serif; cursor:pointer; }
+  .menu button:hover, .menu button.cur { background: var(--hover); color: var(--gold-l); }
   .hint { position:absolute; right:16px; bottom:12px; font: 400 10px/1 'JetBrains Mono', monospace; letter-spacing:1.5px; color: var(--gold-d);
           opacity:.8; pointer-events:none; }
   @media (max-width: 560px) { .hint { display:none; } .count { display:none; } }

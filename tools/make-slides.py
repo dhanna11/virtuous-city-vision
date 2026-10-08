@@ -10,31 +10,50 @@ SITE = "https://dhanna11.github.io/virtuous-city-vision/"
 FIT = Path(__file__).with_name("fit.json")
 SCALE = json.loads(FIT.read_text()) if FIT.exists() else {}
 
-BG, DARK, CARD = "#0a1628", "#070e18", "#0f1d33"
-GOLD, GOLDL, GOLDD, PAPER, GREY = "#c9a84c", "#e0c872", "#8a7234", "#f0ece2", "#a8a49a"
-SERIF, MONO, SANS = "'Instrument Serif', Georgia, serif", "'JetBrains Mono', 'Courier New', monospace", "'Source Sans 3', Arial, sans-serif"
+# Identity A, "Manuscript of the House of Wisdom" (author, 8 Oct 2026; see docs/design/). Light parchment, ink, lapis and
+# terracotta, gold for ornament; EB Garamond with Amiri (Arabic) and Frank Ruhl Libre (Hebrew). The old names are kept:
+# PAPER is now the text colour (ink) and GOLDL the accent (lapis).
+BG, DARK, CARD = "#f3ead6", "#ece0c3", "#faf5e8"
+GOLD, GOLDL, GOLDD, PAPER, GREY = "#a8823a", "#1f3d73", "#a8915e", "#2a2118", "#6b5e48"
+TERRA, RULE = "#a3442a", "#c9b48a"
+SERIF = "'EB Garamond', Georgia, serif"
+MONO = SANS = SERIF   # labels are EB Garamond small caps; no sans or mono on the slides
+AR, HE = "'Amiri', serif", "'Frank Ruhl Libre', serif"
+BORDER, BORDER_S = "rgba(168,130,58,0.35)", "rgba(168,130,58,0.5)"
 HANDLE = "X.COM/THEKINGDAVIDJR"
 S = 1.0
 
+import math
 def px(n): return f"{round(n * S)}px"
+
+def star8(cx, cy, r, ri):
+    pts = []
+    for i in range(16):
+        ang = math.radians(i * 22.5 - 90); rr = r if i % 2 == 0 else ri
+        pts.append(f"{cx + rr * math.cos(ang):.1f},{cy + rr * math.sin(ang):.1f}")
+    return " ".join(pts)
 
 def a(text, href):
     return f'<a href="{href}" target="_blank" rel="noopener" style="color:{GOLDL}; text-underline-offset:4px">{text}</a>'
 
-def emo(e, size=64):
-    return f'<p aria-hidden="true" style="font-size:{px(size)}; line-height:1; flex:none">{e}</p>'
+def emo(e, size=64, color=TERRA):
+    """the slide's mark: an eight-pointed girih star (the emoji argument is kept only as a hint of the slide's subject)"""
+    r = size / 2
+    return (f'<svg aria-hidden="true" viewBox="0 0 {size} {size}" style="width:{px(size)}; height:{px(size)}; flex:none">'
+            f'<polygon points="{star8(r, r, r * .96, r * .7)}" fill="none" stroke="{color}" stroke-width="2.5"/>'
+            f'<polygon points="{star8(r, r, r * .5, r * .36)}" fill="{color}"/></svg>')
 
-def kick(t, fs=28, color=GOLD, ls=4):
-    return (f'<p style="font-family:{MONO}; font-size:{px(fs)}; font-weight:700; color:{color}; letter-spacing:{ls}px; '
+def kick(t, fs=28, color=TERRA, ls=5):
+    return (f'<p style="font-family:{SERIF}; font-size:{px(fs)}; font-weight:600; color:{color}; letter-spacing:{ls}px; '
             f'text-transform:uppercase; text-wrap:balance">{t}</p>')
 
-def h2(t, fs=80, color=GOLD):
-    return f'<h2 style="font-family:{SERIF}; font-size:{px(fs)}; font-weight:400; color:{color}; line-height:1.1; text-wrap:balance">{t}</h2>'
+def h2(t, fs=80, color=PAPER):
+    return f'<h2 style="font-family:{SERIF}; font-size:{px(fs)}; font-weight:500; color:{color}; line-height:1.08; text-wrap:balance">{t}</h2>'
 
-def head(e, k, t=None, ks=28, ts=80, tc=GOLD):
-    inner = kick(k, ks) + (h2(t, ts, tc) if t else "")
-    return (f'<div style="display:flex; gap:24px; align-items:center">{emo(e)}'
-            f'<div style="flex:1; display:flex; flex-direction:column; gap:16px">{inner}</div></div>')
+def head(e, k, t=None, ks=28, ts=80, tc=PAPER):
+    inner = kick(k, min(ks, 30)) + (h2(t, ts, tc) if t else "")
+    return (f'<div style="display:flex; gap:24px; align-items:center">{emo(e, 56)}'
+            f'<div style="flex:1; display:flex; flex-direction:column; gap:14px">{inner}</div></div>')
 
 def p(t, fs=44, font=SERIF, color=PAPER, italic=False, lh=1.3, extra=""):
     it = " font-style:italic;" if italic else ""
@@ -42,57 +61,78 @@ def p(t, fs=44, font=SERIF, color=PAPER, italic=False, lh=1.3, extra=""):
 
 def ul(items, fs=46, color=PAPER, font=SERIF):
     lis = "".join(f"<li>{i}</li>" for i in items)
-    return (f'<ul style="text-wrap:pretty; font-family:{font}; font-size:{px(fs)}; color:{color}; line-height:1.35; '
+    return (f'<ul style="text-wrap:pretty; font-family:{font}; font-size:{px(fs)}; color:{color}; line-height:1.32; '
             f'padding:0 0 0 40px; display:flex; flex-direction:column; gap:{px(10)}">{lis}</ul>')
 
 def coda(t, fs=40):
     return (f'<p style="font-family:{SERIF}; font-size:{px(fs)}; font-style:italic; color:{GOLDL}; line-height:1.25; '
-            f'text-wrap:pretty; border-top:1px solid rgba(201,168,76,0.25); padding-top:{px(24)}">{t}</p>')
+            f'text-wrap:pretty; border-top:1px solid {BORDER_S}; padding-top:{px(22)}">{t}</p>')
 
 def card(label, body, e=None, ls=30, bs=36, gold=False, body_font=SERIF, extra=""):
-    border = GOLD if gold else "rgba(201,168,76,0.14)"
-    top = emo(e, 56) if e else ""
-    lab = (f'<p style="font-family:{MONO}; font-size:{px(ls)}; font-weight:700; color:{GOLDL}; letter-spacing:2px; '
-           f'text-transform:uppercase; line-height:1.3">{label}</p>') if label else ""
-    b = body if body.startswith("<") else f'<p style="font-family:{body_font}; font-size:{px(bs)}; color:{PAPER}; line-height:1.3; text-wrap:pretty">{body}</p>'
-    return (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(14)}; background:{CARD}; border:1px solid {border}; '
-            f'border-radius:4px; padding:{px(30)}{extra}">{top}{lab}{b}</div>')
+    border = TERRA if gold else BORDER
+    lab = (f'<p style="font-family:{SERIF}; font-size:{px(ls)}; font-weight:600; color:{TERRA if gold else GOLDL}; letter-spacing:3px; '
+           f'text-transform:uppercase; line-height:1.25">{label}</p>') if label else ""
+    b = body if body.startswith("<") else f'<p style="font-family:{body_font}; font-size:{px(bs)}; color:{PAPER}; line-height:1.28; text-wrap:pretty">{body}</p>'
+    return (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(12)}; background:{CARD}; border:1px solid {border}; '
+            f'border-top:3px solid {TERRA if gold else GOLD}; padding:{px(28)}{extra}">{lab}{b}</div>')
 
 def row(*cards, gap=24):
     return f'<div style="display:flex; gap:{gap}px; align-items:stretch">{"".join(cards)}</div>'
 
-def icon(name, color=GOLD, size=56):
+def icon(name, color=GOLDL, size=56):
     return f'<x-icon name="{name}" style="width:{px(size)}; height:{px(size)}; color:{color}"></x-icon>'
 
 def flow(steps):
     """boxes joined by arrows: steps = [(icon, label)]"""
-    arrow = f'<x-shape kind="arrow-right" style="width:64px; height:32px; background:{GOLDD}; align-self:center"></x-shape>'
+    arrow = f'<x-shape kind="arrow-right" style="width:64px; height:32px; background:{TERRA}; align-self:center"></x-shape>'
     boxes = [(f'<div style="flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; background:{CARD}; '
-              f'border:1px solid rgba(201,168,76,0.25); border-radius:4px; padding:{px(26)} 20px">{icon(i)}'
-              f'<p style="font-family:{MONO}; font-size:{px(26)}; font-weight:700; color:{GOLDL}; letter-spacing:2px; text-transform:uppercase; line-height:1.3">{t}</p></div>')
+              f'border:1px solid {BORDER}; border-top:3px solid {GOLD}; padding:{px(24)} 20px">{icon(i)}'
+              f'<p style="font-family:{SERIF}; font-size:{px(28)}; font-weight:600; color:{PAPER}; letter-spacing:2px; text-transform:uppercase; line-height:1.25">{t}</p></div>')
              for i, t in steps]
     return f'<div style="display:flex; gap:20px; align-items:stretch">{arrow.join(boxes)}</div>'
 
 def chips(items, fs=32):
-    cs = "".join(f'<p style="font-family:{SANS}; font-size:{px(fs)}; font-weight:600; color:{PAPER}; background:#162744; '
-                 f'border:2px solid {GOLD}; border-radius:40px; padding:{px(12)} {px(28)}; white-space:nowrap">{c}</p>' for c in items)
+    cs = "".join(f'<p style="font-family:{SERIF}; font-size:{px(fs + 2)}; font-weight:500; color:{PAPER}; background:{CARD}; '
+                 f'border:1.5px solid {GOLD}; border-radius:40px; padding:{px(10)} {px(28)}; white-space:nowrap">{c}</p>' for c in items)
     return f'<div style="display:flex; flex-wrap:wrap; gap:18px">{cs}</div>'
 
 def timeline(n, hi=None):
     xs = [round(40 + (1584) * (i + .5) / n) for i in range(n)]
-    dots = "".join(f'<circle cx="{x}" cy="40" r="{22 if i == hi else 16}" fill="{GOLDL if i == hi else GOLD}"/>' for i, x in enumerate(xs))
+    dots = "".join(f'<polygon points="{star8(x, 40, 22 if i == hi else 17, 13 if i == hi else 10)}" fill="{TERRA if i == hi else GOLD}"/>' for i, x in enumerate(xs))
     return (f'<svg aria-label="Timeline with {n} markers" viewBox="0 0 1664 80" style="width:1664px; height:80px; flex:none">'
-            f'<line x1="40" y1="40" x2="1624" y2="40" stroke="{GOLDD}" stroke-width="3"/>{dots}'
-            f'<polygon points="1624,28 1660,40 1624,52" fill="{GOLDD}"/></svg>')
+            f'<line x1="40" y1="40" x2="1624" y2="40" stroke="{GOLD}" stroke-width="2"/>{dots}'
+            f'<polygon points="1624,30 1656,40 1624,50" fill="{GOLD}"/></svg>')
+
+def girih_band(w, y, h, color):
+    n = int(w // h); st = w / n; out = []
+    for i in range(n):
+        cx = st * i + st / 2
+        out.append(f'<polygon points="{star8(cx, y + h / 2, h * .46, h * .3)}" fill="none" stroke="{color}" stroke-width="1.6"/>')
+        out.append(f'<circle cx="{cx:.1f}" cy="{y + h / 2:.1f}" r="{h * .09:.1f}" fill="{color}"/>')
+    return "".join(out)
+
+# the manuscript page: a double gold frame with a band of girih stars along the top, drawn behind every slide
+# (one star, reused 60 times: an SVG <pattern> would print as a bitmap on every PDF page)
+_STARS = "".join(f'<use href="#girih" x="{60 + 30 * i}" y="54"/>' for i in range(60))
+FRAME = (f'<svg class="xf" aria-hidden="true" viewBox="0 0 1920 1080" style="position:absolute; left:0; top:0; width:1920px; height:1080px; pointer-events:none">'
+         f'<defs><g id="girih"><polygon points="{star8(15, 15, 13.8, 9)}" fill="none" stroke="{GOLD}" stroke-width="1.6"/><circle cx="15" cy="15" r="2.7" fill="{GOLD}"/></g></defs>'
+         f'<rect x="48" y="40" width="1824" height="1000" fill="none" stroke="{GOLD}" stroke-width="3"/>'
+         f'<rect x="60" y="52" width="1800" height="976" fill="none" stroke="{RULE}" stroke-width="1.5"/>{_STARS}</svg>')
 
 def section(sid, inner, foot, bg=BG, gap=32, justify="center"):
-    return (f'<section id="{sid}" data-transition="fade" style="background:{bg}; color:{PAPER}; font-family:{SANS}; '
-            f'padding:128px 128px 160px; display:flex; flex-direction:column; gap:{px(gap)}; justify-content:{justify}">\n{inner}\n'
-            f'<p style="position:absolute; left:128px; bottom:64px; width:800px; font-family:{MONO}; font-size:24px; color:{GOLDD}; letter-spacing:3px">{foot.upper()}</p>'
-            f'<p style="position:absolute; right:128px; bottom:64px; width:800px; text-align:right; font-family:{MONO}; font-size:24px; color:{GOLDD}; letter-spacing:3px">{HANDLE}</p>\n</section>')
+    frame = FRAME.replace("girih", "girih-" + sid)
+    return (f'<section id="{sid}" data-transition="fade" style="background:{bg}; color:{PAPER}; font-family:{SERIF}; '
+            f'padding:128px 128px 160px; display:flex; flex-direction:column; gap:{px(gap)}; justify-content:{justify}">\n{frame}{inner}\n'
+            f'<p style="position:absolute; left:128px; bottom:72px; width:800px; font-family:{SERIF}; font-size:22px; font-weight:600; color:{TERRA}; letter-spacing:4px">{foot.upper()}</p>'
+            f'<p style="position:absolute; right:128px; bottom:72px; width:800px; text-align:right; font-family:{SERIF}; font-size:22px; font-weight:600; color:{GOLD}; letter-spacing:4px">{HANDLE}</p>\n</section>')
 
-def divider(sid, e, k, t, sub, foot):
-    inner = (emo(e, 72) + kick(k, 30) + h2(t, 92) + p(sub, 40, italic=True, color=GREY))
+def divider(sid, e, k, t, sub, foot, ar=None, he=None):
+    tri = ""
+    if ar or he:
+        tri = (f'<div style="display:flex; gap:48px; align-items:baseline">'
+               + (f'<p dir="rtl" lang="ar" style="font-family:{AR}; font-size:{px(52)}; color:{GOLDL}; line-height:1.3">{ar}</p>' if ar else "")
+               + (f'<p dir="rtl" lang="he" style="font-family:{HE}; font-size:{px(46)}; color:{GOLDL}; line-height:1.3">{he}</p>' if he else "") + '</div>')
+    inner = (emo(e, 80) + kick(k, 30) + h2(t, 92) + tri + p(sub, 40, italic=True, color=GREY))
     return section(sid, inner, foot, bg=DARK, gap=28)
 
 BRAND = "The Virtuous City Vision"
@@ -567,7 +607,7 @@ def house_wager():
 @slide
 def wtf():
     inner = (f'<div style="flex:1"></div>' + p("Anyone who has lived through these past three years has had to ask themselves one unavoidable question:", 48, color=GREY, italic=True) +
-             f'<h2 style="font-family:{SERIF}; font-size:{px(132)}; font-weight:400; color:{GOLD}; line-height:1.05">What the fuck was all this for?</h2><div style="flex:1"></div>')
+             f'<h2 style="font-family:{SERIF}; font-size:{px(132)}; font-weight:500; color:{TERRA}; line-height:1.05">What the fuck was all this for?</h2><div style="flex:1"></div>')
     return section("wtf", inner, "The close", bg=DARK, gap=40, justify="start")
 
 @slide
@@ -988,6 +1028,115 @@ def p_economy():
             c("🔧", "DDR", "a hudna · interim manpower caps · safe passage · reintegration through the Labor Movement"), gap=18),
         "", gap=44)
 
+# ================================================================ identity A (8 Oct 2026): cover, architecture rota, timeline
+# Working translations, to be checked by native speakers (docs/design/README.md).
+AR_TITLE = "إنهاء حرب غزة يجب أن يعيد إلينا إنسانيتنا"
+HE_TITLE = "סיום המלחמה בעזה חייב להשיב לנו את אנושיותנו"
+AR_CITY, HE_CITY = "المدينة الفاضلة", "העיר המעולה"
+AR_SAADA, HE_SAADA = "السعادة", "האושר"
+
+def wedge(cx, cy, r0, r1, a0, a1):
+    pt = lambda r, ang: (cx + r * math.cos(math.radians(ang)), cy + r * math.sin(math.radians(ang)))
+    x0, y0 = pt(r1, a0); x1, y1 = pt(r1, a1); x2, y2 = pt(r0, a1); x3, y3 = pt(r0, a0)
+    return f"M{x0:.1f},{y0:.1f} A{r1},{r1} 0 0 1 {x1:.1f},{y1:.1f} L{x2:.1f},{y2:.1f} A{r0},{r0} 0 0 0 {x3:.1f},{y3:.1f} Z"
+
+@slide
+def cover():
+    divider_svg = (f'<svg aria-hidden="true" viewBox="0 0 400 40" style="width:400px; height:40px; align-self:center; flex:none"><line x1="0" y1="20" x2="170" y2="20" stroke="{GOLD}" stroke-width="2"/>'
+                   f'<polygon points="{star8(200, 20, 16, 9)}" fill="{TERRA}"/><line x1="230" y1="20" x2="400" y2="20" stroke="{GOLD}" stroke-width="2"/></svg>')
+    inner = (f'<div style="flex:1"></div>'
+             f'<p dir="rtl" lang="ar" style="font-family:{AR}; font-size:64px; color:{GOLDL}; line-height:1.25; text-align:center">{AR_CITY}</p>'
+             f'<p style="font-family:{SERIF}; font-size:26px; font-weight:500; letter-spacing:10px; color:{TERRA}; text-align:center">THE VIRTUOUS CITY VISION</p>'
+             f'<p dir="rtl" lang="he" style="font-family:{HE}; font-size:54px; color:{GOLDL}; line-height:1.25; text-align:center">{HE_CITY}</p>'
+             + divider_svg +
+             f'<h1 style="font-family:{SERIF}; font-size:108px; font-weight:500; color:{PAPER}; line-height:1.04; text-align:center; text-wrap:balance">Ending the Gaza War Must Restore Our Humanity</h1>'
+             f'<p dir="rtl" lang="ar" style="font-family:{AR}; font-size:36px; color:{GREY}; line-height:1.35; text-align:center">{AR_TITLE}</p>'
+             f'<p dir="rtl" lang="he" style="font-family:{HE}; font-size:32px; color:{GREY}; line-height:1.3; text-align:center">{HE_TITLE}</p>'
+             f'<div style="flex:1"></div>'
+             f'<p style="font-family:{SERIF}; font-size:34px; font-style:italic; color:{TERRA}; text-align:center">David Hanna Jr. · Unofficial · a private author’s proposal · October 2026</p>')
+    return section("cover", inner, "", gap=14, justify="start")
+
+@slide
+def arc():
+    cx, cy = 500, 560; out = []
+    cols = [GOLDL, TERRA, GOLD, GOLDL, TERRA, GOLD]
+    names = [n for n, _ in ARCH]
+    for i, name in enumerate(names):
+        a0, a1 = -90 + i * 60 + 2, -90 + (i + 1) * 60 - 2
+        out.append(f'<path d="{wedge(cx, cy, 165, 380, a0, a1)}" fill="{cols[i]}" fill-opacity=".1" stroke="{cols[i]}" stroke-width="2.5"/>')
+        am = math.radians((a0 + a1) / 2); tx, ty = cx + 272 * math.cos(am), cy + 272 * math.sin(am)
+        words = name.split(" "); half = (len(words) + 1) // 2
+        lines = [" ".join(words[:half]), " ".join(words[half:])] if len(words) > 1 else [name]
+        out.append(f'<text x="{tx:.0f}" y="{ty - (len(lines) - 1) * 17 + 8:.0f}" text-anchor="middle" font-family="EB Garamond" font-size="30" font-weight="600" fill="{PAPER}">' +
+                   "".join(f'<tspan x="{tx:.0f}" dy="{0 if k == 0 else 34}">{l}</tspan>' for k, l in enumerate(lines)) + '</text>')
+        nx, ny = cx + 412 * math.cos(am), cy + 412 * math.sin(am)
+        out.append(f'<circle cx="{nx:.0f}" cy="{ny:.0f}" r="21" fill="{BG}" stroke="{cols[i]}" stroke-width="2"/><text x="{nx:.0f}" y="{ny + 8:.0f}" text-anchor="middle" font-family="EB Garamond" font-size="25" font-weight="700" fill="{cols[i]}">{i + 1}</text>')
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="148" fill="{BG}" stroke="{GOLD}" stroke-width="3"/>')
+    out.append(f'<polygon points="{star8(cx, cy, 138, 102)}" fill="none" stroke="{GOLD}" stroke-width="1.5"/>')
+    out.append(f'<text x="{cx}" y="{cy - 32}" text-anchor="middle" font-family="Amiri" font-size="46" fill="{GOLDL}">{AR_SAADA}</text>')
+    out.append(f'<text x="{cx}" y="{cy + 14}" text-anchor="middle" font-family="EB Garamond" font-size="34" font-weight="600" fill="{PAPER}">The telos</text>')
+    out.append(f'<text x="{cx}" y="{cy + 58}" text-anchor="middle" font-family="Frank Ruhl Libre" font-size="36" fill="{GOLDL}">{HE_SAADA}</text>')
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="436" fill="none" stroke="{RULE}" stroke-width="1.5" stroke-dasharray="4 8"/>')
+    legend = "".join(f'<div style="display:flex; gap:18px; align-items:baseline; border-top:1px solid {RULE}; padding:8px 0">'
+                     f'<span style="font-family:{SERIF}; font-size:28px; font-weight:700; color:{cols[i]}; width:26px; flex:none">{i + 1}</span><div><p style="font-family:{SERIF}; font-size:30px; font-weight:600; color:{PAPER}; line-height:1.1">{n}</p>'
+                     f'<p style="font-family:{SERIF}; font-size:21px; color:{GREY}; line-height:1.25; margin-top:3px">{d}</p></div></div>' for i, (n, d) in enumerate(ARCH))
+    inner = (f'<svg class="xf" aria-label="The six blocks of the architecture around the telos" viewBox="0 0 1920 1080" style="position:absolute; left:0; top:0; width:1920px; height:1080px">{"".join(out)}</svg>'
+             f'<div style="margin-left:860px; display:flex; flex-direction:column">'
+             f'{kick("The architecture", 26)}<h2 style="font-family:{SERIF}; font-size:58px; font-weight:500; color:{PAPER}; line-height:1.05; margin:10px 0 8px">Six organs of one healthy body</h2>'
+             f'<p style="font-family:{SERIF}; font-size:25px; font-style:italic; color:{GOLDL}; line-height:1.3; margin-bottom:12px">“each part of society functioning harmoniously, like organs in a healthy body” · Al-Farabi</p>'
+             f'{legend}</div>')
+    return section("arc", inner, "", gap=0)
+
+ARCH = [("Coalition core", "The Board of Peace incubates the Coalition for Canaan · the Virtuous City Convention · three sets of guarantees"),
+        ("Coalition continuity", "0–2 years incubation · 0–10 coalition of the willing · 10–20 alliance model · 20–30 voluntary confederation"),
+        ("Security & stabilization", "Demilitarization and DDR · the ISF · West Bank joint patrols · support for Israeli disengagement"),
+        ("Arab partners & trust funds", "Egypt as security anchor · a Reconstruction Custodian · the Virtuous City Trust Fund · the Holy Land Trust"),
+        ("Governance & economy", "The telos and a new social contract · the Virtuous City Council · the Economic Plan · the Palestinian Labor Movement"),
+        ("Education & reconciliation", "The House of Wisdom and Peace · the Multiple Truths, Reconciliation and Prosperity Framework")]
+
+TIMELINE = [  # (start, end, name, sub, milestones)
+    (0, 2, "Board of Peace incubation", "", ["Conclude the war via the Virtuous City Convention", "Deploy the ISF security mandate", "Fund and launch Gaza pilots",
+                                             "Activate NCAG governance", "Execute initial DDR and disengagement", "Formalize the Coalition for Canaan"]),
+    (0, 10, "Coalition of the willing", "stabilization", ["Full-scale demilitarization and infrastructure rebuild", "Establish the transitional government",
+                                                          "Support PA reforms toward statehood", "Complete IDF disengagement from Gaza"]),
+    (10, 20, "Alliance model", "integration", ["Deepen Palestinian self-governance", "Support for Palestinian state recognition", "Abraham Accords expansion",
+                                               "Reconciliation and educational frameworks", "Easing of movement restrictions", "Initial Israeli disengagement from the West Bank"]),
+    (20, 30, "Voluntary confederation", "full maturity", ["Full mutual state recognition", "Full integration of Israel, Palestine, and the wider Middle East",
+                                                          "Full implementation of the reconciliation frameworks", "Full freedom of movement", "Final border demarcation and complete Israeli military withdrawal"])]
+
+@slide
+def timeline_():
+    """a Gantt over years 0-30: each phase a bar, its milestones listed beside it in two lines"""
+    x0, y0, w, rowh = 150, 362, 1620, 150; k = w / 30; out = []
+    cols = [TERRA, GOLDL, GOLD, GOLDL]
+    for yr in range(0, 31, 5):
+        x = x0 + yr * k
+        dash = "none" if yr % 10 == 0 else "3 6"
+        out.append(f'<line x1="{x:.0f}" y1="{y0 - 18}" x2="{x:.0f}" y2="{y0 + rowh * 4 - 30}" stroke="{RULE}" stroke-width="1" stroke-dasharray="{dash}"/>')
+        out.append(f'<text x="{x:.0f}" y="{y0 - 30}" text-anchor="middle" font-family="EB Garamond" font-size="24" fill="{GREY}">{"year " if yr == 0 else ""}{yr}</text>')
+    for i, (s_, e, name, sub, ms) in enumerate(TIMELINE):
+        y = y0 + i * rowh; x = x0 + s_ * k; bw = (e - s_) * k; col = cols[i]
+        out.append(f'<rect x="{x:.0f}" y="{y}" width="{bw:.0f}" height="44" rx="22" fill="{col}" fill-opacity=".14" stroke="{col}" stroke-width="2.5"/>')
+        right = s_ >= 15
+        lx, anchor = (x + bw - 20, "end") if right else ((x + 20, "start") if bw > 400 else (x + bw + 22, "start"))
+        out.append(f'<text x="{lx:.0f}" y="{y + 31}" text-anchor="{anchor}" font-family="EB Garamond" font-size="27" font-weight="600" fill="{PAPER}">{name}</text>')
+        mx = x + bw if right else (x + 20 if bw > 400 else x + bw + 22)
+        lines = [f"{s_}–{e} years" + (f" · {sub}" if sub else "")] + [" · ".join(ms[j:j + 2]) for j in range(0, len(ms), 2)]
+        for j, line in enumerate(lines):
+            out.append(f'<text x="{mx:.0f}" y="{y + 70 + j * 25}" text-anchor="{anchor}" font-family="EB Garamond" font-size="{21 if j else 22}" '
+                       f'font-weight="{600 if j == 0 else 400}" font-style="{"italic" if j == 0 else "normal"}" fill="{col if j == 0 else GREY}">{line}</text>')
+    inner = (f'<svg class="xf" aria-label="Timeline: an incubation and three phases over thirty years" viewBox="0 0 1920 1080" style="position:absolute; left:0; top:0; width:1920px; height:1080px">{"".join(out)}</svg>'
+             f'<div style="display:flex; flex-direction:column; gap:10px">{kick("3 · Coalition continuity · the generational timeline", 26)}'
+             f'<h2 style="font-family:{SERIF}; font-size:64px; font-weight:500; color:{PAPER}; line-height:1.05">Roughly 30 years: an incubation and three phases</h2>'
+             f'<p style="font-family:{SERIF}; font-size:28px; font-style:italic; color:{GOLDL}">Each phase after the incubation is an optional expanded mandate.</p></div>')
+    return section("timeline", inner, "", gap=0, justify="start")
+
+@slide
+def sec_telos():
+    return divider("sec-telos", "📜", "1 · The telos", "The Telos of the Virtuous City of Gaza",
+        f"{FARABI} {OPINIONS} is more than an obscure utopian text preserved under the patronage of a bygone Abbasid Emir · it is the singular spiritual template for Gaza’s rebirth", "The telos",
+        ar=AR_CITY, he=HE_CITY)
+
 # ---------------------------------------------------------------- decks
 FULL = {"title": BRAND, "order": [
     "cover", "lead", "moment", "missing", "credit", "vision", "arc",
@@ -1035,9 +1184,9 @@ PITCH = {"title": BRAND + " · Pitch", "order": [
     "wisdom": ("house", "The House of Wisdom and Peace."),
     "close": ("wtf", "The close.")}}
 
-FACES = {"instrument-serif": {"family": "Instrument Serif", "href": "https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap"},
-         "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"},
-         "source-sans-3": {"family": "Source Sans 3", "href": "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"}}
+FACES = {"eb-garamond": {"family": "EB Garamond", "href": "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"},
+         "amiri": {"family": "Amiri", "href": "https://fonts.googleapis.com/css2?family=Amiri&display=swap"},
+         "frank-ruhl-libre": {"family": "Frank Ruhl Libre", "href": "https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&display=swap"}}
 
 
 # the left footer names the slide's section (cover and the closing slides keep their own)
@@ -1063,7 +1212,7 @@ def write(dirname, spec):
         S = SCALE.get(sid, 1.0)
         html = fn()
         if sid not in ("cover", "close", "p-close"):
-            html = _re.sub(r'(<p style="position:absolute; left:128px; bottom:64px; width:800px;[^>]*>)[^<]*(</p>)', lambda m: m.group(1) + feet[sid].upper() + m.group(2), html)
+            html = _re.sub(r'(<p style="position:absolute; left:128px; bottom:72px; width:800px;[^>]*>)[^<]*(</p>)', lambda m: m.group(1) + feet[sid].upper() + m.group(2), html)
         (d / "slides" / f"{sid}.html").write_text(html + "\n")
     deck = {"v": 4, "createdOnFiles": {"v": 1, "at": "2026-10-04T12:00:00Z"}, "title": spec["title"], "order": spec["order"],
             "sections": {k: {"description": desc, "start": start} for k, (start, desc) in spec["sections"].items()},

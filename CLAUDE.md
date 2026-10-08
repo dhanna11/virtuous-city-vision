@@ -34,6 +34,7 @@ Run it locally before pushing: `cd tests && npm ci && npx playwright install chr
 
 ## Rules
 - The site is a DRAFT (author, 5 Oct 2026): `DRAFT = True` in `build-slideshow.py` adds the DRAFT title, badge, slide watermark and a noindex tag, and the plain-text edition carries a DRAFT line under the byline. Turn both off only when the author says it's final.
+- The look is identity A (author, 8 Oct 2026; `docs/design/`): a light parchment manuscript page, EB Garamond with Amiri (Arabic) and Frank Ruhl Libre (Hebrew), set in `tools/make-slides.py` and the page wrapper in `build-slideshow.py`. The Arabic and Hebrew on the slides are working translations awaiting a native speaker's check; don't add more without flagging them.
 - The words on the slides are the author's. Never rewrite slide text without the author's word.
 - Keep the site static and self-contained. Don't add trackers, analytics or third-party scripts without asking.
 - Every slide has a stable link (`index.html#<slide-id>`). Don't rename slide ids casually. When one is dropped, `SLIDE_ALIASES` redirects it; never delete an alias.

@@ -78,17 +78,17 @@
   }
  },
  "faces": {
-  "instrument-serif": {
-   "family": "Instrument Serif",
-   "href": "https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap"
+  "eb-garamond": {
+   "family": "EB Garamond",
+   "href": "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
   },
-  "jetbrains-mono": {
-   "family": "JetBrains Mono",
-   "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+  "amiri": {
+   "family": "Amiri",
+   "href": "https://fonts.googleapis.com/css2?family=Amiri&display=swap"
   },
-  "source-sans-3": {
-   "family": "Source Sans 3",
-   "href": "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+  "frank-ruhl-libre": {
+   "family": "Frank Ruhl Libre",
+   "href": "https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&display=swap"
   }
  },
  "designSystems": []
