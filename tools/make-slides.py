@@ -1137,6 +1137,165 @@ def sec_telos():
         f"{FARABI} {OPINIONS} is more than an obscure utopian text preserved under the patronage of a bygone Abbasid Emir · it is the singular spiritual template for Gaza’s rebirth", "The telos",
         ar=AR_CITY, he=HE_CITY)
 
+# ================================================================ infographics (8 Oct 2026): flows, a schematic, a ladder, a Venn
+# Labels are the slides' own words; nothing here adds numbers or claims.
+def wrap(text, n):
+    """split text into lines of at most ~n characters"""
+    lines, cur = [], ""
+    for w in text.split():
+        if cur and len(cur) + 1 + len(w) > n: lines.append(cur); cur = w
+        else: cur = (cur + " " + w).strip()
+    return lines + ([cur] if cur else [])
+
+def stext(x, y, text, n, size=24, color=None, anchor="start", weight=400, italic=False, lh=1.25, halo=False):
+    """multi-line SVG text: wrapped at ~n characters, first baseline at y"""
+    color = color or PAPER
+    tsp = "".join(f'<tspan x="{x:.0f}" dy="{0 if i == 0 else round(size * lh)}">{l}</tspan>' for i, l in enumerate(wrap(text, n)))
+    return (f'<text x="{x:.0f}" y="{y:.0f}" text-anchor="{anchor}" font-family="EB Garamond" font-size="{size}" font-weight="{weight}" '
+            f'{"font-style=" + chr(34) + "italic" + chr(34) + " " if italic else ""}'
+            f'{"stroke=" + chr(34) + "#f3ead6" + chr(34) + " stroke-width=" + chr(34) + "6" + chr(34) + " stroke-linejoin=" + chr(34) + "round" + chr(34) + " paint-order=" + chr(34) + "stroke" + chr(34) + " " if halo else ""}'
+            f'fill="{color}">{tsp}</text>')
+
+def sbox(x, y, w, h, stroke=None, top=None, fill=None):
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill or CARD}" stroke="{stroke or BORDER}" stroke-width="1.5"/>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="4" fill="{top or GOLD}"/>')
+
+def slabel(x, y, text, color=None, size=22, anchor="start"):
+    return (f'<text x="{x:.0f}" y="{y:.0f}" text-anchor="{anchor}" font-family="EB Garamond" font-size="{size}" font-weight="600" '
+            f'letter-spacing="3" fill="{color or GOLDL}">{text.upper()}</text>')
+
+def figure(w, h, body, label):
+    return f'<svg role="img" aria-label="{label}" viewBox="0 0 {w} {h}" style="width:{w}px; height:{h}px; flex:none">{body}</svg>'
+
+@slide
+def assets():
+    out = []
+    srcs = [("Seed funding", "A portion of repurposed Iranian frozen assets"),
+            ("Matching", "Matched by members of the Board of Peace"),
+            ("Donors", "Donor contributions, pooled through global fundraising")]
+    for i, (lab, txt) in enumerate(srcs):
+        y = 20 + i * 160
+        out.append(sbox(0, y, 470, 130, top=TERRA if i == 0 else GOLD))
+        out.append(slabel(26, y + 40, lab, TERRA if i == 0 else GOLDL))
+        out.append(stext(26, y + 76, txt, 38, 25))
+        out.append(f'<path d="M470,{y + 65} C560,{y + 65} 560,{215 + (i - 1) * 50} 650,{215 + (i - 1) * 50}" fill="none" stroke="{GOLD}" stroke-opacity=".55" stroke-width="12"/>')
+    out.append(sbox(650, 90, 470, 260, stroke=TERRA, top=TERRA))
+    out.append(stext(885, 150, "The Virtuous City Trust Fund", 30, 34, TERRA, "middle", 600))
+    out.append(stext(885, 205, "Managed by the Board of Peace (and the Palestinian Authority after reforms) and the World Bank, with assistance from the Reconstruction Custodian", 40, 23, GREY, "middle"))
+    out.append(f'<path d="M1120,215 L1212,215" stroke="{GOLDL}" stroke-opacity=".55" stroke-width="22"/><polygon points="1210,193 1244,215 1210,237" fill="{GOLDL}" fill-opacity=".8"/>')
+    out.append(sbox(1250, 110, 414, 220, top=GOLDL))
+    out.append(stext(1457, 170, "Gaza’s reconstruction", 30, 32, PAPER, "middle", 600))
+    out.append(stext(1457, 222, "Anchors the economic foundation of the Virtuous City Vision", 32, 24, GREY, "middle"))
+    return section("assets", head("💰", "Arab partners & trust funds · the central financing pillar", "The Virtuous City Trust Fund") +
+        figure(1664, 500, "".join(out), "Money flows from three sources into the Virtuous City Trust Fund, then to Gaza’s reconstruction") +
+        coda("These assets roughly align in scale with the cost of rebuilding Gaza · it could emerge within a broader diplomatic framework focused on ending the 2026 Iran War", 32),
+        "", gap=26, justify="start")
+
+def ledger_map(w=960, h=600, compact=False):
+    """a schematic (not a map): contiguity corridors between Palestinian communities, and settlement footprints frozen in place"""
+    out = []
+    terr = "M210,40 C330,10 520,30 640,70 C760,110 830,200 820,320 C810,430 760,520 640,565 C520,600 360,590 250,550 C140,510 90,420 100,300 C110,180 120,70 210,40 Z"
+    sx, sy = w / 900, h / 620
+    out.append(f'<g transform="scale({sx:.3f} {sy:.3f})">')
+    out.append(f'<path d="{terr}" fill="#efe4cb" stroke="{GOLD}" stroke-width="2.5"/>')
+    towns = [(260, 150), (470, 120), (640, 210), (330, 330), (560, 360), (420, 480), (690, 450)]
+    for a_, b_ in [(0, 1), (1, 2), (0, 3), (3, 4), (2, 4), (4, 5), (4, 6), (3, 5)]:
+        (x1, y1), (x2, y2) = towns[a_], towns[b_]
+        out.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{GOLDL}" stroke-opacity=".28" stroke-width="30" stroke-linecap="round"/>')
+    setts = [(365, 215, 60, 34), (540, 250, 44, 30), (230, 420, 54, 36), (470, 410, 40, 26), (700, 300, 50, 30), (560, 520, 46, 28)]
+    for x, y, ww, hh in setts:
+        out.append(f'<rect x="{x - 8}" y="{y - 8}" width="{ww + 16}" height="{hh + 16}" fill="none" stroke="{TERRA}" stroke-width="1.5" stroke-dasharray="5 4"/>')
+        out.append(f'<rect x="{x}" y="{y}" width="{ww}" height="{hh}" fill="{TERRA}" fill-opacity=".45" stroke="{TERRA}" stroke-width="2"/>')
+    for x, y in towns:
+        out.append(f'<circle cx="{x}" cy="{y}" r="15" fill="{PAPER}"/><circle cx="{x}" cy="{y}" r="6" fill="{CARD}"/>')
+    out.append('</g>')
+    out.append(f'<text x="{w - 10}" y="{h - 8}" text-anchor="end" font-family="EB Garamond" font-size="20" font-style="italic" fill="{GREY}">Schematic, not a map</text>')
+    return figure(w, h, "".join(out), "Schematic of the two ledgers: easement corridors connecting Palestinian communities, and settlement footprints frozen inside their registered boundaries")
+
+def legend_item(swatch, label, text, fs=28):
+    return (f'<div style="display:flex; gap:20px; align-items:flex-start">{swatch}<div style="flex:1">'
+            f'<p style="font-family:{SERIF}; font-size:{px(24)}; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:{GOLDL}">{label}</p>'
+            f'<p style="font-family:{SERIF}; font-size:{px(fs)}; color:{PAPER}; line-height:1.25; margin-top:4px">{text}</p></div></div>')
+
+SW_EASE = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><line x1="6" y1="15" x2="54" y2="15" stroke="{GOLDL}" stroke-opacity=".35" stroke-width="22" stroke-linecap="round"/></svg>'
+SW_SETT = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><rect x="4" y="2" width="52" height="26" fill="none" stroke="{TERRA}" stroke-dasharray="5 4" stroke-width="1.5"/><rect x="12" y="8" width="36" height="14" fill="{TERRA}" fill-opacity=".45" stroke="{TERRA}" stroke-width="2"/></svg>'
+SW_TOWN = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><circle cx="30" cy="15" r="12" fill="{PAPER}"/><circle cx="30" cy="15" r="5" fill="{CARD}"/></svg>'
+
+@slide
+def ledgers():
+    legend = (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(22)}">'
+              + legend_item(SW_EASE, "1 · Easements", "internationally funded non-development easements over a defined map of contiguity-critical parcels")
+              + legend_item(SW_SETT, "2 · Use payments", "from Israel, held in escrow, over the registered footprint of existing settlements and outposts")
+              + legend_item(SW_TOWN, "Palestinian communities", "kept contiguous by the easements", 26)
+              + p("Empty land shall remain empty. Built land shall remain limited to its registered footprint.", 32, color=TERRA, lh=1.25)
+              + p("Neither ledger transfers title, recognizes annexation, or determines final borders · both convert into final-status instruments only upon a negotiated settlement", 23, color=GREY, italic=True)
+              + '</div>')
+    return section("ledgers", head("📒", "The West Bank · two ledgers", "Parallel, without prejudice", ts=70) +
+        f'<div style="display:flex; gap:48px; align-items:center">{ledger_map(900, 600)}{legend}</div>',
+        "", gap=18, justify="start")
+
+@slide
+def p_west_bank():
+    legend = (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(24)}">'
+              + legend_item(SW_EASE, "Easements", "internationally funded, over contiguity-critical parcels", 30)
+              + legend_item(SW_SETT, "Use payments", "from Israel, held in escrow, over the registered footprint of settlements", 30)
+              + p("Empty land shall remain empty. Built land shall remain limited to its registered footprint.", 34, color=TERRA, lh=1.25)
+              + p("A pragmatic compromise to keep the two-state horizon on its deathbed rather than consigning it to the dustbin of history.", 26, color=GOLDL, italic=True)
+              + '</div>')
+    return section("p-west-bank", head("🫒", "7 · The West Bank", "A Holy Land Trust", ts=70) +
+        f'<div style="display:flex; gap:48px; align-items:center">{ledger_map(900, 600)}{legend}</div>',
+        "", gap=18, justify="start")
+
+@slide
+def trade():
+    out = []; lx, rx, top, bot = 700, 964, 70, 500
+    out.append(f'<line x1="{lx}" y1="{top}" x2="{lx}" y2="{bot + 20}" stroke="{TERRA}" stroke-width="8" stroke-linecap="round"/>')
+    out.append(f'<line x1="{rx}" y1="{top}" x2="{rx}" y2="{bot + 20}" stroke="{GOLDL}" stroke-width="8" stroke-linecap="round"/>')
+    rungs = [("Verified relinquishment of independent coercive capacity", "Phased Israeli withdrawal"),
+             ("Security passes to legitimate Palestinian institutions under Palestinian authority", "Credible regional and international security guarantees, with Egypt as the regional security anchor"),
+             ("A pathway into ordinary political life", "An enforceable pathway to self-determination and statehood")]
+    for i, (l, r) in enumerate(rungs):
+        y = bot - 40 - i * 150
+        out.append(f'<line x1="{lx}" y1="{y}" x2="{rx}" y2="{y}" stroke="{GOLD}" stroke-width="6"/>')
+        out.append(f'<circle cx="{(lx + rx) / 2:.0f}" cy="{y}" r="20" fill="{BG}" stroke="{GOLD}" stroke-width="2"/><text x="{(lx + rx) / 2:.0f}" y="{y + 8}" text-anchor="middle" font-family="EB Garamond" font-size="24" font-weight="700" fill="{GOLD}">{i + 1}</text>')
+        out.append(stext(lx - 34, y - 10, l, 44, 26, PAPER, "end"))
+        out.append(stext(rx + 34, y - 10, r, 44, 26, PAPER, "start"))
+    out.append(slabel(lx - 34, 30, "Armed factions relinquish", TERRA, 24, "end"))
+    out.append(slabel(rx + 34, 30, "As occupation recedes", GOLDL, 24, "start"))
+    out.append(f'<polygon points="{star8((lx + rx) / 2, 40, 30, 20)}" fill="{TERRA}"/>')
+    out.append(stext((lx + rx) / 2, bot + 62, "Reciprocal, not unilateral surrender", 60, 26, GREY, "middle", 400, True))
+    return section("trade", head("⚖️", "Demilitarization · the trade", "Factions relinquish coercive power as occupation recedes", ts=66) +
+        figure(1664, 580, "".join(out), "A ladder: each step by armed factions is paired with a step of the settlement, rising toward statehood") +
+        coda("The alternative has already been tried, at enormous cost, and has not ended the occupation either.", 32),
+        "", gap=16, justify="start")
+
+@slide
+def fw_abrahamic():
+    out = []; cx, cy, r = 470, 310, 196
+    for name, x, y, col in [("Jews", cx - 120, cy - 70, GOLDL), ("Muslims", cx + 120, cy - 70, TERRA), ("Christians", cx, cy + 135, GOLD)]:
+        out.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{col}" fill-opacity=".1" stroke="{col}" stroke-width="2.5"/>')
+    out.append(slabel(cx - 330, cy - 70, "Jews", GOLDL, 28, "end"))
+    out.append(slabel(cx + 330, cy - 70, "Muslims", TERRA, 28, "start"))
+    out.append(slabel(cx, cy + 360, "Christians", GOLD, 28, "middle"))
+    def badge(x, y, n, col):
+        return (f'<circle cx="{x}" cy="{y}" r="17" fill="{BG}" stroke="{col}" stroke-width="2"/>'
+                f'<text x="{x}" y="{y + 7}" text-anchor="middle" font-family="EB Garamond" font-size="21" font-weight="700" fill="{col}">{n}</text>')
+    out.append(badge(cx, cy - 205, 4, GOLDL))
+    out.append(stext(cx, cy - 160, "Judeo-Islamic Tradition", 13, 23, PAPER, "middle", 600, halo=True))
+    out.append(f'<polygon points="{star8(cx, cy - 2, 24, 16)}" fill="{TERRA}"/>')
+    out.append(badge(cx, cy + 50, 5, TERRA))
+    out.append(stext(cx, cy + 96, "Abrahamic Tradition", 11, 23, PAPER, "middle", 600, halo=True))
+    fig = figure(960, 690, "".join(out), "Three overlapping circles for Jews, Muslims and Christians: the Judeo-Islamic Tradition where two meet, the Broader Abrahamic Tradition where all three meet")
+    right = (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(22)}">'
+             + ul(["A universal umbrella for past, current, and future interfaith initiatives and peace covenants, with shared educational programs",
+                   "Covenants of coexistence, restraint, and mutual recognition among Jews, Muslims, and Christians",
+                   "Especially around contested holy sites, where sanctity must once again become covenant"], 32)
+             + coda("Both traditions belong within the Abraham Accords: extending normalization beyond diplomatic recognition into structured civilizational, educational, and religious reconciliation architecture.", 28)
+             + '</div>')
+    return section("fw-abrahamic", head("🤝", "Frameworks · 5 of 5", "The Formal Establishment of the Broader Abrahamic Tradition", ts=60) +
+        f'<div style="display:flex; gap:40px; align-items:center; margin-top:-24px">{fig}{right}</div>',
+        "", gap=0, justify="start")
+
 # ---------------------------------------------------------------- decks
 FULL = {"title": BRAND, "order": [
     "cover", "lead", "moment", "missing", "credit", "vision", "arc",
