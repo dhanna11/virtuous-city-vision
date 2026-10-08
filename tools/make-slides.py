@@ -1191,60 +1191,60 @@ def assets():
         coda("These assets roughly align in scale with the cost of rebuilding Gaza · it could emerge within a broader diplomatic framework focused on ending the 2026 Iran War", 32),
         "", gap=26, justify="start")
 
-def ledger_map(w=960, h=600, compact=False):
-    """a schematic (not a map): contiguity corridors between Palestinian communities, and settlement footprints frozen in place"""
-    out = []
-    terr = "M210,40 C330,10 520,30 640,70 C760,110 830,200 820,320 C810,430 760,520 640,565 C520,600 360,590 250,550 C140,510 90,420 100,300 C110,180 120,70 210,40 Z"
-    sx, sy = w / 900, h / 620
-    out.append(f'<g transform="scale({sx:.3f} {sy:.3f})">')
-    out.append(f'<path d="{terr}" fill="#efe4cb" stroke="{GOLD}" stroke-width="2.5"/>')
-    towns = [(260, 150), (470, 120), (640, 210), (330, 330), (560, 360), (420, 480), (690, 450)]
-    for a_, b_ in [(0, 1), (1, 2), (0, 3), (3, 4), (2, 4), (4, 5), (4, 6), (3, 5)]:
-        (x1, y1), (x2, y2) = towns[a_], towns[b_]
-        out.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{GOLDL}" stroke-opacity=".28" stroke-width="30" stroke-linecap="round"/>')
-    setts = [(365, 215, 60, 34), (540, 250, 44, 30), (230, 420, 54, 36), (470, 410, 40, 26), (700, 300, 50, 30), (560, 520, 46, 28)]
-    for x, y, ww, hh in setts:
-        out.append(f'<rect x="{x - 8}" y="{y - 8}" width="{ww + 16}" height="{hh + 16}" fill="none" stroke="{TERRA}" stroke-width="1.5" stroke-dasharray="5 4"/>')
-        out.append(f'<rect x="{x}" y="{y}" width="{ww}" height="{hh}" fill="{TERRA}" fill-opacity=".45" stroke="{TERRA}" stroke-width="2"/>')
-    for x, y in towns:
-        out.append(f'<circle cx="{x}" cy="{y}" r="15" fill="{PAPER}"/><circle cx="{x}" cy="{y}" r="6" fill="{CARD}"/>')
-    out.append('</g>')
-    out.append(f'<text x="{w - 10}" y="{h - 8}" text-anchor="end" font-family="EB Garamond" font-size="20" font-style="italic" fill="{GREY}">Schematic, not a map</text>')
-    return figure(w, h, "".join(out), "Schematic of the two ledgers: easement corridors connecting Palestinian communities, and settlement footprints frozen inside their registered boundaries")
-
-def legend_item(swatch, label, text, fs=28):
-    return (f'<div style="display:flex; gap:20px; align-items:flex-start">{swatch}<div style="flex:1">'
-            f'<p style="font-family:{SERIF}; font-size:{px(24)}; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:{GOLDL}">{label}</p>'
-            f'<p style="font-family:{SERIF}; font-size:{px(fs)}; color:{PAPER}; line-height:1.25; margin-top:4px">{text}</p></div></div>')
-
-SW_EASE = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><line x1="6" y1="15" x2="54" y2="15" stroke="{GOLDL}" stroke-opacity=".35" stroke-width="22" stroke-linecap="round"/></svg>'
-SW_SETT = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><rect x="4" y="2" width="52" height="26" fill="none" stroke="{TERRA}" stroke-dasharray="5 4" stroke-width="1.5"/><rect x="12" y="8" width="36" height="14" fill="{TERRA}" fill-opacity=".45" stroke="{TERRA}" stroke-width="2"/></svg>'
-SW_TOWN = f'<svg aria-hidden="true" viewBox="0 0 60 30" style="width:60px; height:30px; flex:none; margin-top:4px"><circle cx="30" cy="15" r="12" fill="{PAPER}"/><circle cx="30" cy="15" r="5" fill="{CARD}"/></svg>'
+def ledger_flow():
+    """the Holy Land Trust's two ledgers as rows: the land, who pays, what it pays for, the rule; both end at a settlement"""
+    out = []; bw, bh, gap, x0, y0, rowgap = 290, 212, 44, 0, 60, 46
+    heads = ["The land", "Who pays", "What it pays for", "The rule"]
+    rows = [(GOLDL, ["Empty land", "contiguity-critical parcels, on a defined map"],
+                    ["International funds", ""],
+                    ["Non-development easements", ""],
+                    ["Empty land shall remain empty.", ""]),
+            (TERRA, ["Built land", "existing settlements and outposts"],
+                    ["Israel", "use payments, held in escrow"],
+                    ["Use of the registered footprint", ""],
+                    ["Built land shall remain limited to its registered footprint.", ""])]
+    for j, h in enumerate(heads):
+        out.append(slabel(x0 + j * (bw + gap) + bw / 2, 30, h, GREY, 24, "middle"))
+    for i, (col, *cells) in enumerate(rows):
+        y = y0 + i * (bh + rowgap)
+        for j, (main, sub) in enumerate(cells):
+            x = x0 + j * (bw + gap); last = j == 3
+            out.append(sbox(x, y, bw, bh, stroke=col if last else None, top=col))
+            if sub:
+                n = len(wrap(main, 15)); m = len(wrap(sub, 20)); top = y + bh / 2 - (n * 39 + m * 32) / 2 + 30
+                out.append(stext(x + bw / 2, top, main, 15, 34, PAPER, "middle", 600, False, 1.15))
+                out.append(stext(x + bw / 2, top + n * 39 + 4, sub, 20, 26, GREY, "middle", 400, True, 1.2))
+            else:
+                n = len(wrap(main, 15))
+                out.append(stext(x + bw / 2, y + bh / 2 - (n - 1) * 19 + 11, main, 15, 32, col if last else PAPER, "middle", 600, False, 1.15))
+            if j < 3:
+                ax = x + bw; ym = y + bh / 2
+                out.append(f'<path d="M{ax + 6},{ym} L{ax + gap - 14},{ym}" stroke="{col}" stroke-width="3"/>'
+                           f'<polygon points="{ax + gap - 16},{ym - 8} {ax + gap - 4},{ym} {ax + gap - 16},{ym + 8}" fill="{col}"/>')
+    fx = x0 + 4 * (bw + gap) + 36; fy = y0; fh = 2 * bh + rowgap; fw = 1664 - fx; mid = fy + fh / 2
+    for i in range(2):
+        y = y0 + i * (bh + rowgap) + bh / 2; sx_ = x0 + 3 * (bw + gap) + bw
+        out.append(f'<path d="M{sx_ + 6},{y} C{sx_ + 40},{y} {fx - 40},{mid} {fx - 12},{mid}" fill="none" stroke="{GOLD}" stroke-width="3"/>')
+    out.append(f'<polygon points="{fx - 16},{mid - 9} {fx - 2},{mid} {fx - 16},{mid + 9}" fill="{GOLD}"/>')
+    out.append(sbox(fx, fy, fw, fh, stroke=GOLD, top=GOLD))
+    out.append(f'<polygon points="{star8(fx + fw / 2, fy + 110, 26, 17)}" fill="{GOLD}"/>')
+    out.append(stext(fx + fw / 2, fy + 200, "Upon a negotiated settlement", 12, 34, PAPER, "middle", 600, False, 1.15))
+    out.append(stext(fx + fw / 2, fy + 330, "both ledgers convert into final-status instruments", 14, 27, GREY, "middle", 400, True, 1.2))
+    return figure(1664, y0 + fh + 6, "".join(out), "The Holy Land Trust's two ledgers: international funds buy easements that keep empty land empty; Israel's use payments, held in escrow, cover the registered settlement footprint, which may not grow; at a negotiated settlement both convert into final-status instruments")
 
 @slide
 def ledgers():
-    legend = (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(22)}">'
-              + legend_item(SW_EASE, "1 · Easements", "internationally funded non-development easements over a defined map of contiguity-critical parcels")
-              + legend_item(SW_SETT, "2 · Use payments", "from Israel, held in escrow, over the registered footprint of existing settlements and outposts")
-              + legend_item(SW_TOWN, "Palestinian communities", "kept contiguous by the easements", 26)
-              + p("Empty land shall remain empty. Built land shall remain limited to its registered footprint.", 32, color=TERRA, lh=1.25)
-              + p("Neither ledger transfers title, recognizes annexation, or determines final borders · both convert into final-status instruments only upon a negotiated settlement", 23, color=GREY, italic=True)
-              + '</div>')
-    return section("ledgers", head("📒", "The West Bank · two ledgers", "Parallel, without prejudice", ts=70) +
-        f'<div style="display:flex; gap:48px; align-items:center">{ledger_map(900, 600)}{legend}</div>',
-        "", gap=18, justify="start")
+    return section("ledgers", head("📒", "The West Bank · the Holy Land Trust", "Two parallel, without-prejudice ledgers", ts=66) +
+        ledger_flow() +
+        coda("Neither ledger transfers title, recognizes annexation, or determines final borders.", 34),
+        "", gap=30, justify="start")
 
 @slide
 def p_west_bank():
-    legend = (f'<div style="flex:1; display:flex; flex-direction:column; gap:{px(24)}">'
-              + legend_item(SW_EASE, "Easements", "internationally funded, over contiguity-critical parcels", 30)
-              + legend_item(SW_SETT, "Use payments", "from Israel, held in escrow, over the registered footprint of settlements", 30)
-              + p("Empty land shall remain empty. Built land shall remain limited to its registered footprint.", 34, color=TERRA, lh=1.25)
-              + p("A pragmatic compromise to keep the two-state horizon on its deathbed rather than consigning it to the dustbin of history.", 26, color=GOLDL, italic=True)
-              + '</div>')
-    return section("p-west-bank", head("🫒", "7 · The West Bank", "A Holy Land Trust", ts=70) +
-        f'<div style="display:flex; gap:48px; align-items:center">{ledger_map(900, 600)}{legend}</div>',
-        "", gap=18, justify="start")
+    return section("p-west-bank", head("🫒", "7 · The West Bank", "A Holy Land Trust, with two ledgers", ts=66) +
+        ledger_flow() +
+        coda("A pragmatic compromise to keep the two-state horizon on its deathbed rather than consigning it to the dustbin of history.", 32),
+        "", gap=30, justify="start")
 
 @slide
 def trade():

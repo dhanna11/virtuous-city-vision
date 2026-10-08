@@ -65,7 +65,7 @@ The first pass copied the Islamabad Accords deck's identity: dark navy (`#0a1628
   - A DDR pipeline: weapons in, the Reconstruction Corps out.
 - **Freedom of movement:** a flow of stay / leave / resettle / return, marking which choices are reversible.
 - **Arab partners & trust funds:** a money flow. Frozen Iranian assets, Board of Peace matching and donors feed the Trust Fund; it runs with the World Bank and through the Custodian to the PA's 56 programs.
-- **The West Bank:** a schematic of the two ledgers. Contiguity easements in green; settlement footprints frozen and outlined.
+- **The West Bank:** the two ledgers as rows (the land, who pays, what it pays for, the rule), both converging on a negotiated settlement. (A schematic "map" was tried on 8 Oct 2026 and dropped: an invented geography explains nothing and invites misreading.)
 - **Governance & economy:**
   - A Gaza map with the seaport, the Gaza Marine field and the IMEC corridor.
   - An org chart for the Council, the Labor Movement and the Board of Peace.
