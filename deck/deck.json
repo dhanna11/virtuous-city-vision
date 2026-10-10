@@ -114,7 +114,7 @@
    "start": "egypt"
   },
   "westbank": {
-   "description": "The Holy Land Trust, its two ledgers, and why.",
+   "description": "The Holy Land Trust, its two escrow-style accounts, and why.",
    "start": "holy-land-trust"
   },
   "economy": {

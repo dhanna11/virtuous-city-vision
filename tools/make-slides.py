@@ -1192,7 +1192,7 @@ def assets():
         "", gap=26, justify="start")
 
 def ledger_flow():
-    """the Holy Land Trust's two ledgers as rows: the land, who pays, what it pays for, the rule; both end at a settlement"""
+    """the Holy Land Trust's two escrow-style accounts (the essay's "ledgers"; renamed by the author, 10 Oct 2026) as rows: the land, who pays, what it pays for, the rule; both end at a settlement"""
     out = []; bw, bh, gap, x0, y0, rowgap = 290, 212, 44, 0, 60, 46
     heads = ["The land", "Who pays", "What it pays for", "The rule"]
     rows = [(GOLDL, ["Empty land", "contiguity-critical parcels, on a defined map"],
@@ -1229,19 +1229,19 @@ def ledger_flow():
     out.append(sbox(fx, fy, fw, fh, stroke=GOLD, top=GOLD))
     out.append(f'<polygon points="{star8(fx + fw / 2, fy + 110, 26, 17)}" fill="{GOLD}"/>')
     out.append(stext(fx + fw / 2, fy + 200, "Upon a negotiated settlement", 12, 34, PAPER, "middle", 600, False, 1.15))
-    out.append(stext(fx + fw / 2, fy + 330, "both ledgers convert into final-status instruments", 14, 27, GREY, "middle", 400, True, 1.2))
-    return figure(1664, y0 + fh + 6, "".join(out), "The Holy Land Trust's two ledgers: international funds buy easements that keep empty land empty; Israel's use payments, held in escrow, cover the registered settlement footprint, which may not grow; at a negotiated settlement both convert into final-status instruments")
+    out.append(stext(fx + fw / 2, fy + 330, "both accounts convert into final-status instruments", 14, 27, GREY, "middle", 400, True, 1.2))
+    return figure(1664, y0 + fh + 6, "".join(out), "The Holy Land Trust's two escrow-style accounts: international funds buy easements that keep empty land empty; Israel's use payments, held in escrow, cover the registered settlement footprint, which may not grow; at a negotiated settlement both convert into final-status instruments")
 
 @slide
 def ledgers():
-    return section("ledgers", head("📒", "The West Bank · the Holy Land Trust", "Two parallel, without-prejudice ledgers", ts=66) +
+    return section("ledgers", head("📒", "The West Bank · the Holy Land Trust", "Two escrow-style accounts, without prejudice", ts=66) +
         ledger_flow() +
-        coda("Neither ledger transfers title, recognizes annexation, or determines final borders.", 34),
+        coda("Neither account transfers title, recognizes annexation, or determines final borders.", 34),
         "", gap=30, justify="start")
 
 @slide
 def p_west_bank():
-    return section("p-west-bank", head("🫒", "7 · The West Bank", "A Holy Land Trust, with two ledgers", ts=66) +
+    return section("p-west-bank", head("🫒", "7 · The West Bank", "A Holy Land Trust, with two escrow-style accounts", ts=66) +
         ledger_flow() +
         coda("A pragmatic compromise to keep the two-state horizon on its deathbed rather than consigning it to the dustbin of history.", 32),
         "", gap=30, justify="start")
@@ -1319,7 +1319,7 @@ FULL = {"title": BRAND, "order": [
     "security": ("sec-demil", "Demilitarization, DDR, and the ISF."),
     "movement": ("movement", "Freedom of movement: temporary evacuation and asylum."),
     "arab": ("egypt", "Egypt, the Reconstruction Custodian, and the Virtuous City Trust Fund."),
-    "westbank": ("holy-land-trust", "The Holy Land Trust, its two ledgers, and why."),
+    "westbank": ("holy-land-trust", "The Holy Land Trust, its two escrow-style accounts, and why."),
     "economy": ("council", "The Virtuous City Council, the economic plan, a US compact, and the Palestinian Labor Movement."),
     "recon": ("sec-recon", "Five reconciliation frameworks, the Multiple Truths framework, and a precedent."),
     "wisdom": ("house", "The House of Wisdom and Peace."),
