@@ -156,7 +156,7 @@ def cover():
            f'<path d="M0,25 C140,25 170,75 240,75" fill="none" stroke="{GOLDD}" stroke-width="3"/><path d="M0,75 C140,75 170,75 240,75" fill="none" stroke="{GOLD}" stroke-width="3"/>'
            f'<path d="M0,125 C140,125 170,75 240,75" fill="none" stroke="{GOLDD}" stroke-width="3"/><path d="M240,75 L292,75" stroke="{GOLDL}" stroke-width="6" stroke-linecap="round"/>'
            f'<circle cx="240" cy="75" r="12" fill="{CARD}" stroke="{GOLDL}" stroke-width="3"/></svg>')
-    inner = (f'<div style="flex:1"></div><h1 style="font-family:{SERIF}; font-size:{px(112)}; font-weight:400; color:{GOLD}; line-height:1.05; text-align:center; text-wrap:balance">Ending the Gaza War Must Restore Our Humanity</h1>'
+    inner = (f'<div style="flex:1"></div><h1 style="font-family:{SERIF}; font-size:{px(112)}; font-weight:400; color:{GOLD}; line-height:1.05; text-align:center; text-wrap:balance">Ending the October 7th Firestorm Must Restore Our Humanity</h1>'
              f'<p style="font-family:{SERIF}; font-size:{px(52)}; font-style:italic; color:{PAPER}; text-align:center">{BRAND}</p>'
              f'<hr style="border-top:1px solid {GOLD}; width:320px; align-self:center">'
              f'<div style="display:flex; align-items:center; justify-content:center; gap:20px"><div style="display:flex; flex-direction:column">{ls}</div>'
@@ -1030,8 +1030,8 @@ def p_economy():
 
 # ================================================================ identity A (8 Oct 2026): cover, architecture rota, timeline
 # Working translations, to be checked by native speakers (docs/design/README.md).
-AR_TITLE = "إنهاء حرب غزة يجب أن يعيد إلينا إنسانيتنا"
-HE_TITLE = "סיום המלחמה בעזה חייב להשיב לנו את אנושיותנו"
+AR_TITLE = "إنهاء العاصفة النارية للسابع من أكتوبر يجب أن يعيد إلينا إنسانيتنا"
+HE_TITLE = "סיום סופת האש של השבעה באוקטובר חייב להשיב לנו את אנושיותנו"
 AR_CITY, HE_CITY = "المدينة الفاضلة", "העיר המעולה"
 AR_SAADA, HE_SAADA = "السعادة", "האושר"
 
@@ -1049,7 +1049,7 @@ def cover():
              f'<p style="font-family:{SERIF}; font-size:26px; font-weight:500; letter-spacing:10px; color:{TERRA}; text-align:center">THE VIRTUOUS CITY VISION</p>'
              f'<p dir="rtl" lang="he" style="font-family:{HE}; font-size:54px; color:{GOLDL}; line-height:1.25; text-align:center">{HE_CITY}</p>'
              + divider_svg +
-             f'<h1 style="font-family:{SERIF}; font-size:108px; font-weight:500; color:{PAPER}; line-height:1.04; text-align:center; text-wrap:balance">Ending the Gaza War Must Restore Our Humanity</h1>'
+             f'<h1 style="font-family:{SERIF}; font-size:108px; font-weight:500; color:{PAPER}; line-height:1.04; text-align:center; text-wrap:balance">Ending the October 7th Firestorm Must Restore Our Humanity</h1>'
              f'<p dir="rtl" lang="ar" style="font-family:{AR}; font-size:36px; color:{GREY}; line-height:1.35; text-align:center">{AR_TITLE}</p>'
              f'<p dir="rtl" lang="he" style="font-family:{HE}; font-size:32px; color:{GREY}; line-height:1.3; text-align:center">{HE_TITLE}</p>'
              f'<div style="flex:1"></div>'
