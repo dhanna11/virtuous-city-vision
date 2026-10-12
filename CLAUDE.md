@@ -14,6 +14,7 @@ A static site: two click-through slideshows (the pitch on the front page, the fu
 - `LICENSE` (MIT: build scripts, tests, workflow, page wrapper) and `LICENSE-CONTENT.md` (CC BY 4.0: text and design, in every edition).
 - `.github/workflows/check.yml` and `tests/`: the check that runs on every PR (see "Checks").
 - `tools/make-slides.py`: writes `deck/` and `pitch/` (every slide's text and layout lives here; edit it, not the slide files, then rerun it and `build-slideshow.py`). `tools/fit.json` holds per-slide type scales; `node tools/fit.mjs` (after a build that leaves `preview*.html`) lists slides whose content leaves the safe area; `node tools/pdf.mjs` prints `preview-full.html` to the PDF edition. The node tools use `tests/node_modules`, so run `npm ci` in `tests/` first.
+- `docs/TODO-translations.md`: the open check of the slides' Arabic and Hebrew (what is confirmed, what is not, and the steps).
 - `docs/design/`: the visual identity directions (A, chosen 8 Oct 2026: the House of Wisdom manuscript, light, with Arabic and Hebrew; B and C kept for ideas), the mock-ups, and the infographic ideas. Read it before restyling.
 
 ## Where the deck lives
@@ -34,7 +35,7 @@ Run it locally before pushing: `cd tests && npm ci && npx playwright install chr
 
 ## Rules
 - The site is a DRAFT (author, 5 Oct 2026): `DRAFT = True` in `build-slideshow.py` adds the DRAFT title, badge, slide watermark and a noindex tag, and the plain-text edition carries a DRAFT line under the byline. Turn both off only when the author says it's final.
-- The look is identity A (author, 8 Oct 2026; `docs/design/`): a light parchment manuscript page, EB Garamond with Amiri (Arabic) and Frank Ruhl Libre (Hebrew), set in `tools/make-slides.py` and the page wrapper in `build-slideshow.py`. The Arabic and Hebrew on the slides are working translations awaiting a native speaker's check; don't add more without flagging them.
+- The look is identity A (author, 8 Oct 2026; `docs/design/`): a light parchment manuscript page, EB Garamond with Amiri (Arabic) and Frank Ruhl Libre (Hebrew), set in `tools/make-slides.py` and the page wrapper in `build-slideshow.py`. The Arabic and Hebrew on the slides are AI translations being checked (`docs/TODO-translations.md`); add any new line to its table first.
 - The words on the slides are the author's. Never rewrite slide text without the author's word.
 - Keep the site static and self-contained. Don't add trackers, analytics or third-party scripts without asking.
 - Every slide has a stable link (`index.html#<slide-id>`). Don't rename slide ids casually. When one is dropped, `SLIDE_ALIASES` redirects it; never delete an alias.
