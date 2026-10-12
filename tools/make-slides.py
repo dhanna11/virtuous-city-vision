@@ -1304,7 +1304,7 @@ E1_SOURCES = [("AP", "https://www.pbs.org/newshour/amp/world/israel-clears-final
               ("Peace Now", "https://peacenow.org.il/en/wp-json/wp/v2/posts/44461")]
 
 @slide
-def e1():
+def e1_now():
     steps = [("Aug 2025", "Higher Planning Council final approval: 3,400+ units on about 12 km²", GOLD),
              ("Jan 2026", "Israel Land Authority tender: 3,401 units", GOLD),
              ("18 Aug 2026", "Housing Ministry opens bidding on 1,234 units", TERRA),
@@ -1319,8 +1319,7 @@ def e1():
         out.append(stext(x, yl + 88, t, 27, 22, GREY, "middle", 400, False, 1.22))
     fig = figure(w, 210, "".join(out), "E1 timeline, August 2025 to October 2026: final approval, two tenders, a court ruling, and bids closing 19 October 2026")
     src = " · ".join(a(nm, u) for nm, u in E1_SOURCES)
-    return section("e1", head("📍", "The West Bank · the test case", "E1: where empty land must remain empty", ts=66) +
-        p("The open land between Ma’ale Adumim and Jerusalem. Building it would, in AP’s words, “cut the West Bank in two”.", 32, color=GREY, italic=True) +
+    return section("e1-now", head("📍", "The West Bank · E1 · now", "Where empty land must remain empty", ts=66) +
         fig +
         row(card("What Israel cites", ul2(["State land, held by the Custodian of Government Property and marketed by the Israel Land Authority",
                                            "Planning approval by the Civil Administration’s Higher Planning Council, under the Jordanian Planning Law of 1966 as amended by military order",
@@ -1329,7 +1328,39 @@ def e1():
                                                    "Israel gives a funded, easement-like undertaking not to build, without prejudice to title",
                                                    "If contracts are signed first, compensating the developers enters the account too"], 25), ls=24, gold=True), gap=24) +
         p(f"Status as of 12 October 2026 · sources: {src}", 20, color=GREY),
-        "", gap=18, justify="start")
+        "", gap=30, justify="center")
+
+# E1's history and its Jerusalem dimension (author, 12 Oct 2026: "E1 is as much about the Islamic claim to Jerusalem as it is
+# to the territorial integrity of the West Bank")
+E1_HISTORY_SOURCES = [("Wikipedia", "https://en.wikipedia.org/wiki/E1_(West_Bank)"),
+                      ("UN", "https://www.un.org/unispal/document/auto-insert-193858"),
+                      ("VOA, 2012", "https://www.globalsecurity.org/military/library/news/2012/12/mil-121201-voa01.htm")]
+
+@slide
+def e1():
+    steps = [("1991", "Part of E1 placed under Ma’ale Adumim’s council"),
+             ("1994", "Plan tabled; Rabin extends the borders, holds off building"),
+             ("2002", "Master plan signed; Israel pledges to the US not to build"),
+             ("2004–09", "Roads and a police HQ built; a 2009 understanding with the US"),
+             ("2012", "Revived after the UN upgrades Palestine’s status"),
+             ("2020", "Netanyahu advances the plans; Europe objects"),
+             ("2025–26", "Final approval, then tenders")]
+    out = []; w = 1664; n = len(steps); x0, x1 = 110, w - 110; yl = 34
+    out.append(f'<line x1="{x0 - 70}" y1="{yl}" x2="{x1 + 70}" y2="{yl}" stroke="{GOLD}" stroke-width="2"/>')
+    for i, (d, t) in enumerate(steps):
+        x = x0 + (x1 - x0) * i / (n - 1); hot = i == n - 1
+        out.append(f'<polygon points="{star8(x, yl, 16 if hot else 12, 10 if hot else 7.5)}" fill="{TERRA if hot else GOLD}"/>')
+        out.append(stext(x, yl + 50, d, 12, 27, TERRA if hot else PAPER, "middle", 600))
+        out.append(stext(x, yl + 86, t, 18, 23, GREY, "middle", 400, False, 1.2))
+    fig = figure(w, 215, "".join(out), "E1 from 1991 to 2026: planned in the 1990s, held back for two decades under US pressure, revived in 2012 and 2020, approved in 2025")
+    src = " · ".join(a(nm, u) for nm, u in E1_HISTORY_SOURCES)
+    return section("e1", head("🕌", "The West Bank · the test case", "E1: thirty years in the making", ts=66) +
+        fig +
+        row(card("Jerusalem", "E1 is the open land between Ma’ale Adumim and East Jerusalem. Built, it would cut East Jerusalem’s Palestinian neighborhoods off from the rest of the West Bank, and with them al-Quds, home of al-Aqsa and the Dome of the Rock.", ls=24, bs=29, gold=True),
+            card("The West Bank", "It would split the northern West Bank from the southern, and critics say make a contiguous Palestinian state almost impossible. Israel says it serves security and does not block contiguity.", ls=24, bs=29), gap=24) +
+        coda("E1 is as much about the Islamic claim to Jerusalem as it is about the territorial integrity of the West Bank.", 34) +
+        p(f"Sources: {src}", 20, color=GREY),
+        "", gap=22, justify="start")
 
 # ---------------------------------------------------------------- decks
 FULL = {"title": BRAND, "order": [
@@ -1340,7 +1371,7 @@ FULL = {"title": BRAND, "order": [
     "sec-demil", "demil", "lemkin", "trade", "factions", "ddr", "demob", "isf",
     "movement", "evacuation",
     "egypt", "custodian", "assets",
-    "holy-land-trust", "ledgers", "e1", "wb-why", "wb-both", "deathbed",
+    "holy-land-trust", "ledgers", "e1", "e1-now", "wb-why", "wb-both", "deathbed",
     "council", "econ-plan", "compact", "labor", "labor-transition",
     "sec-recon", "recon-why", "frameworks", "fw-telos-mandate", "fw-phylogeny", "fw-judeo-islamic", "fw-abrahamic", "multiple-truths", "precedent",
     "house", "house-pilots", "house-history", "house-wager",
