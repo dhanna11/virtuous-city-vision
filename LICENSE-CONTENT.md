@@ -1,6 +1,6 @@
 # The Virtuous City Vision · content license
 
-© 2026 David Hanna Jr. The text and design of *Ending the Gaza War Must Restore Our Humanity: The Virtuous City Vision* are licensed under the
+© 2026 David Hanna Jr. The text and design of *Ending the October 7th Firestorm Must Restore Our Humanity: The Virtuous City Vision* are licensed under the
 [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 The full legal text is at https://creativecommons.org/licenses/by/4.0/legalcode.
 

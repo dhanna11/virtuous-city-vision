@@ -1,4 +1,4 @@
-# Ending the Gaza War Must Restore Our Humanity
+# Ending the October 7th Firestorm Must Restore Our Humanity
 
 *The Virtuous City Vision · David Hanna Jr. · Unofficial, a private author's proposal · October 2026*
 

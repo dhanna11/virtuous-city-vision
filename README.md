@@ -1,4 +1,4 @@
-# Ending the Gaza War Must Restore Our Humanity · The Virtuous City Vision · website
+# Ending the October 7th Firestorm Must Restore Our Humanity · The Virtuous City Vision · website
 
 - `index.html`: the front page, the pitch slideshow; `full.html`: the full deck. Each links to the other. Click Next and Previous, use the arrow keys or the space bar, swipe on a phone, or click the left or right half of a slide. Each slide has its own link, for example `#mandate`.
 - `virtuous-city-vision.pdf`: the PDF edition, linked from the slideshow's PDF button.

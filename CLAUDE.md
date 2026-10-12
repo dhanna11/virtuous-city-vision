@@ -1,4 +1,4 @@
-# Ending the Gaza War Must Restore Our Humanity · The Virtuous City Vision · website repo
+# Ending the October 7th Firestorm Must Restore Our Humanity · The Virtuous City Vision · website repo
 
 A static site: two click-through slideshows (the pitch on the front page, the full deck on full.html), plus the PDF and plain-text editions. No framework, no build server. The infrastructure is a copy of the Islamabad Accords repo (dhanna11/islamabad-accords), duplicated on purpose (Oct 2026); de-duplicating the two is a later clean-up, so a fix to the shared parts (`build-slideshow.py`'s wrapper, `tests/`, the workflow) may need porting to the other repo.
 
