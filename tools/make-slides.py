@@ -1296,6 +1296,41 @@ def fw_abrahamic():
         f'<div style="display:flex; gap:40px; align-items:center; margin-top:-24px">{fig}{right}</div>',
         "", gap=0, justify="start")
 
+# ================================================================ E1 (12 Oct 2026, author: "add an E1 slide to the West Bank section")
+# Facts from news reports as of 12 Oct 2026 (AP, Al Jazeera, The National, Peace Now); update the status line when it changes.
+E1_SOURCES = [("AP", "https://www.pbs.org/newshour/amp/world/israel-clears-final-hurdle-to-start-settlement-construction-that-would-cut-the-west-bank-in-two"),
+              ("Al Jazeera", "https://www.aljazeera.com/news/2026/8/19/palestinians-condemn-israeli-step-to-advance-illegal-e1-settlement-plan"),
+              ("The National", "https://www.thenationalnews.com/news/mena/2026/09/08/israeli-court-rejects-three-petitions-to-halt-illegal-e1-settlement-plan/"),
+              ("Peace Now", "https://peacenow.org.il/en/wp-json/wp/v2/posts/44461")]
+
+@slide
+def e1():
+    steps = [("Aug 2025", "Higher Planning Council final approval: 3,400+ units on about 12 km²", GOLD),
+             ("Jan 2026", "Israel Land Authority tender: 3,401 units", GOLD),
+             ("18 Aug 2026", "Housing Ministry opens bidding on 1,234 units", TERRA),
+             ("8 Sep 2026", "Court declines to freeze the tender; three petitions pending", GOLD),
+             ("19 Oct 2026", "Bids close, eight days before Israel’s election", TERRA)]
+    out = []; w = 1664; n = len(steps); x0, x1 = 120, w - 120; yl = 40
+    out.append(f'<line x1="{x0 - 60}" y1="{yl}" x2="{x1 + 60}" y2="{yl}" stroke="{GOLD}" stroke-width="2"/>')
+    for i, (d, t, col) in enumerate(steps):
+        x = x0 + (x1 - x0) * i / (n - 1)
+        out.append(f'<polygon points="{star8(x, yl, 17 if col == TERRA else 13, 11 if col == TERRA else 8)}" fill="{col}"/>')
+        out.append(stext(x, yl + 52, d, 20, 26, col if col == TERRA else PAPER, "middle", 600))
+        out.append(stext(x, yl + 88, t, 27, 22, GREY, "middle", 400, False, 1.22))
+    fig = figure(w, 210, "".join(out), "E1 timeline, August 2025 to October 2026: final approval, two tenders, a court ruling, and bids closing 19 October 2026")
+    src = " · ".join(a(nm, u) for nm, u in E1_SOURCES)
+    return section("e1", head("📍", "The West Bank · the test case", "E1: where empty land must remain empty", ts=66) +
+        p("The open land between Ma’ale Adumim and Jerusalem. Building it would, in AP’s words, “cut the West Bank in two”.", 32, color=GREY, italic=True) +
+        fig +
+        row(card("What Israel cites", ul2(["State land, held by the Custodian of Government Property and marketed by the Israel Land Authority",
+                                           "Planning approval by the Civil Administration’s Higher Planning Council, under the Jordanian Planning Law of 1966 as amended by military order",
+                                           "A 1991 order placing part of E1 inside Ma’ale Adumim’s jurisdiction"], 25), ls=24),
+            card("Under the Holy Land Trust", ul2(["E1 belongs in the empty-land account: the tenders are frozen",
+                                                   "Israel gives a funded, easement-like undertaking not to build, without prejudice to title",
+                                                   "If contracts are signed first, compensating the developers enters the account too"], 25), ls=24, gold=True), gap=24) +
+        p(f"Status as of 12 October 2026 · sources: {src}", 20, color=GREY),
+        "", gap=18, justify="start")
+
 # ---------------------------------------------------------------- decks
 FULL = {"title": BRAND, "order": [
     "cover", "lead", "moment", "missing", "credit", "vision", "arc",
@@ -1305,7 +1340,7 @@ FULL = {"title": BRAND, "order": [
     "sec-demil", "demil", "lemkin", "trade", "factions", "ddr", "demob", "isf",
     "movement", "evacuation",
     "egypt", "custodian", "assets",
-    "holy-land-trust", "ledgers", "wb-why", "wb-both", "deathbed",
+    "holy-land-trust", "ledgers", "e1", "wb-why", "wb-both", "deathbed",
     "council", "econ-plan", "compact", "labor", "labor-transition",
     "sec-recon", "recon-why", "frameworks", "fw-telos-mandate", "fw-phylogeny", "fw-judeo-islamic", "fw-abrahamic", "multiple-truths", "precedent",
     "house", "house-pilots", "house-history", "house-wager",
